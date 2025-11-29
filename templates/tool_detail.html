@@ -1,56 +1,68 @@
 {% extends "base.html" %}
 
-{% block title %}{{ tool['name'] }} — Outil IA{% endblock %}
-{% block meta_description %}{{ tool['short_description'] or tool['long_description'] }}{% endblock %}
+{% block title %}{{ tool['name'] }} — Fiche outil IA{% endblock %}
+{% block meta_description %}{{ tool['short_description'] or ("Découvrez " ~ tool['name'] ~ ", un outil d’intelligence artificielle référencé dans Spectra AI Directory pour les entreprises.") }}{% endblock %}
+
+{% block extra_head %}
+  {{ super() }}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": {{ tool['name']|tojson }},
+    "applicationCategory": "AIApplication",
+    "operatingSystem": "Web",
+    "description": {{ (tool['short_description'] or tool['long_description'] or "")|tojson }},
+    "url": {{ tool['url']|tojson }},
+    "creator": {
+      "@type": "Organization",
+      "name": "Spectra Media AI"
+    }
+  }
+  </script>
+{% endblock %}
 
 {% block content %}
-<article class="tool-detail">
+<section class="section tool-detail">
+  <header class="tool-detail-header">
+    {% if tool['logo_url'] %}
+      <div class="tool-detail-logo">
+        <img src="{{ tool['logo_url'] }}" alt="Logo {{ tool['name'] }}">
+      </div>
+    {% endif %}
+    <div>
+      <h1>{{ tool['name'] }}</h1>
+      <p class="tool-meta">
+        <span class="tool-category">{{ tool['category'] or "Outil d’intelligence artificielle" }}</span>
+        {% if tool['tags'] %}
+          · <span class="tool-tags">{{ tool['tags'] }}</span>
+        {% endif %}
+      </p>
+    </div>
+  </header>
 
-<!-- SEO JSON-LD -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "{{ tool['name']|e }}",
-  "url": "{{ tool['url']|e }}",
-  "applicationCategory": "AIApplication",
-  "operatingSystem": "Web",
-  "description": "{{ (tool['short_description'] or tool['long_description'] or '') | e }}",
-  {% if tool['logo_url'] %}
-  "image": "{{ tool['logo_url']|e }}",
+  {% if tool['short_description'] %}
+    <p class="tool-short-large">{{ tool['short_description'] }}</p>
   {% endif %}
-  "publisher": {
-    "@type": "Organization",
-    "name": "Spectra AI Directory"
-  }
-}
-</script>
 
-<header class="tool-detail-header">
-  {% if tool['logo_url'] %}
-  <div class="tool-detail-logo">
-    <img src="{{ tool['logo_url'] }}">
-  </div>
+  {% if tool['long_description'] %}
+    <div class="tool-long">
+      {{ tool['long_description'] }}
+    </div>
   {% endif %}
-  <div>
-    <h1>{{ tool['name'] }}</h1>
-    <p class="tool-meta">
-      <span>{{ tool['category'] or "Outil IA" }}</span>
-      {% if tool['tags'] %} · <span>{{ tool['tags'] }}</span>{% endif %}
-    </p>
-    <p class="tool-link">
-      <a href="{{ tool['url'] }}" target="_blank">Visiter le site →</a>
-    </p>
-  </div>
-</header>
 
-{% if tool['short_description'] %}
-<p class="tool-short">{{ tool['short_description'] }}</p>
-{% endif %}
+  <p class="tool-link-primary">
+    <a href="{{ tool['url'] }}" target="_blank" rel="noopener">
+      → Accéder au site officiel de {{ tool['name'] }}
+    </a>
+  </p>
 
-{% if tool['long_description'] %}
-<section class="tool-long">{{ tool['long_description'] }}</section>
-{% endif %}
+  <hr>
 
-</article>
+  <p class="tool-bottom-note">
+    Cet outil IA est référencé dans Spectra AI Directory.
+    Pour ajouter votre propre outil d’intelligence artificielle à l’annuaire,
+    <a href="{{ url_for('ajouter_tool') }}">cliquez ici (référencement payant à 20€).</a>
+  </p>
+</section>
 {% endblock %}
