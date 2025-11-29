@@ -341,3 +341,165 @@ a:hover {
     font-size: 0.8rem;
   }
 }
+/* === Page Ajouter un outil IA === */
+
+.add-tool-section {
+  margin-top: 24px;
+}
+
+.add-tool-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .add-tool-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.add-tool-intro h1 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  color: #a0a3b0;
+  margin-bottom: 8px;
+}
+
+.intro-text {
+  font-size: 0.95rem;
+  color: #d3d4de;
+  max-width: 520px;
+}
+
+.benefits-list {
+  margin-top: 20px;
+}
+
+.benefits-list h2 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.benefits-list ul {
+  list-style: disc;
+  padding-left: 18px;
+  font-size: 0.9rem;
+  color: #c2c4d2;
+}
+
+.highlight-box {
+  margin-top: 20px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #181a24;
+  border: 1px solid #292c3a;
+  font-size: 0.85rem;
+  color: #cfd1dd;
+}
+
+/* Carte formulaire */
+
+.add-tool-card {
+  background: #151826;
+  border-radius: 16px;
+  border: 1px solid #262a3a;
+  padding: 20px 20px 18px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+}
+
+.add-tool-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.card-subtitle {
+  font-size: 0.85rem;
+  color: #a0a3b0;
+  margin-bottom: 16px;
+}
+
+.form-tool-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 16px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+.field-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.field-group label {
+  color: #d5d7e5;
+}
+
+.field-group input,
+.field-group textarea {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 10px;
+  border: 1px solid #34384a;
+  background: #11131c;
+  color: #f5f5f7;
+  font-size: 0.9rem;
+}
+
+.field-group input::placeholder,
+.field-group textarea::placeholder {
+  color: #6c7083;
+}
+
+.field-group input:focus,
+.field-group textarea:focus {
+  outline: none;
+  border-color: #61dafb;
+  box-shadow: 0 0 0 1px rgba(97, 218, 251, 0.3);
+}
+
+.form-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.form-note {
+  font-size: 0.8rem;
+  color: #a0a3b0;
+  text-align: right;
+}
+
+.btn-pay {
+  padding-inline: 20px;
+  background: #ff6b6b;
+  color: #0b0b10;
+}
+
+.btn-pay:hover {
+  filter: brightness(1.08);
+}
+
+@media (max-width: 600px) {
+  .form-footer {
+    align-items: stretch;
+  }
+  .form-note {
+    text-align: left;
+  }
+}
