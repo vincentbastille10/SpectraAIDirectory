@@ -1,42 +1,50 @@
 {% extends "base.html" %}
-{% block title %}{{ tool.name }} – Détail{% endblock %}
+
+{% block title %}{{ tool['name'] }} — Outil IA référencé sur Spectra AI Directory{% endblock %}
+{% block meta_description %}{{ tool['short_description'] or ("Fiche détaillée de l’outil IA " ~ tool['name'] ~ " référencé dans Spectra AI Directory.") }}{% endblock %}
+
 {% block content %}
-<article class="section tool-detail">
+<article class="tool-detail">
   <header class="tool-detail-header">
-    {% if tool.logo_url %}
-      <img src="{{ tool.logo_url }}" alt="Logo {{ tool.name }}" class="tool-detail-logo">
+    {% if tool['logo_url'] %}
+      <div class="tool-detail-logo">
+        <img src="{{ tool['logo_url'] }}" alt="Logo {{ tool['name'] }}">
+      </div>
     {% endif %}
     <div>
-      <h1>{{ tool.name }}</h1>
-      {% if tool.tagline %}
-        <p class="tool-tagline">{{ tool.tagline }}</p>
-      {% endif %}
+      <h1>{{ tool['name'] }}</h1>
       <p class="tool-meta">
-        {% if tool.category %}<span class="pill">{{ tool.category }}</span>{% endif %}
-        {% if tool.country %}<span class="pill pill-soft">{{ tool.country }}</span>{% endif %}
+        <span class="tool-category">{{ tool['category'] or "Outil IA" }}</span>
+        {% if tool['tags'] %}
+          · <span class="tool-tags">{{ tool['tags'] }}</span>
+        {% endif %}
       </p>
-      <a href="{{ tool.website_url }}" target="_blank" class="btn btn-primary">Visiter le site officiel</a>
+      <p class="tool-link">
+        <a href="{{ tool['url'] }}" target="_blank" rel="noopener">
+          Accéder au site officiel de {{ tool['name'] }} →
+        </a>
+      </p>
     </div>
   </header>
 
-  {% if tool.description %}
-    <section class="tool-detail-section">
-      <h2>Description</h2>
-      <p>{{ tool.description }}</p>
+  {% if tool['short_description'] %}
+    <p class="tool-short">{{ tool['short_description'] }}</p>
+  {% endif %}
+
+  {% if tool['long_description'] %}
+    <section class="tool-long">
+      {{ tool['long_description'] | nl2br }}
     </section>
   {% endif %}
 
-  <section class="tool-detail-section">
-    <h2>Informations</h2>
-    <ul class="tool-info-list">
-      <li><strong>Site :</strong> <a href="{{ tool.website_url }}" target="_blank">{{ tool.website_url }}</a></li>
-      {% if tool.contact_email %}
-      <li><strong>Contact :</strong> <a href="mailto:{{ tool.contact_email }}">{{ tool.contact_email }}</a></li>
-      {% endif %}
-      {% if tool.created_at %}
-      <li><strong>Ajouté le :</strong> {{ tool.created_at[:10] }}</li>
-      {% endif %}
-    </ul>
+  <section class="tool-seo-note">
+    <h2>À propos de cette fiche</h2>
+    <p>
+      Cette fiche fait partie de <strong>Spectra AI Directory</strong>, un annuaire
+      sélectif de solutions d’intelligence artificielle pour les entreprises.
+      Chaque page est conçue pour être lisible par les humains et indexable par
+      les moteurs de recherche.
+    </p>
   </section>
 </article>
 {% endblock %}
