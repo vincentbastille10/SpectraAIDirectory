@@ -30,6 +30,7 @@ DB_PATH = os.getenv("DB_PATH", "annuaire.db")
 
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
 STRIPE_PRICE_ID = os.getenv("STRIPE_PRICE_ID", "")
+STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")
 
 if not STRIPE_SECRET_KEY:
     raise RuntimeError("STRIPE_SECRET_KEY manquant")
@@ -55,7 +56,11 @@ def get_db():
 
 
 def seed_tools(db: sqlite3.Connection) -> None:
-    """Seed initial d'outils IA (Betty, inventés + outils IA réels connus)."""
+    """
+    Seed initial d'outils IA :
+    - Betty Bots en tête
+    - Puis des outils IA réels connus (ChatGPT, Sora, etc.)
+    """
     now = datetime.utcnow().isoformat()
     base_url = "https://www.spectramedia.online/"
 
@@ -79,83 +84,7 @@ def seed_tools(db: sqlite3.Connection) -> None:
         },
 
         # ==============================
-        # 2. TES OUTILS INVENTÉS (avec logos Sora)
-        # ==============================
-        {
-            "name": "SalesPilot AI",
-            "url": base_url + "?from=annuaire&tool=salespilot",
-            "short": "Relances commerciales automatiques et scoring de prospects.",
-            "long": "SalesPilot AI automatise les relances, priorise les leads et propose un scoring simple à exploiter pour les équipes commerciales.",
-            "logo": "/public/_70fec99c-ebc7-4189-945a-c366afbfa70b.jpeg",
-            "cat": "Sales Automation",
-            "tags": "#sales #crm #automation",
-        },
-        {
-            "name": "DocuSense IA",
-            "url": base_url + "?from=annuaire&tool=docusense",
-            "short": "Posez des questions à vos PDF, contrats et procédures internes.",
-            "long": "DocuSense IA indexe vos documents internes et permet aux équipes de poser des questions en langage naturel pour trouver la bonne info.",
-            "logo": "/public/_b50d4099-f147-4466-89d1-73016026c012.jpeg",
-            "cat": "Knowledge Base",
-            "tags": "#documentation #pdf #qa",
-        },
-        {
-            "name": "SupportGenie AI",
-            "url": base_url + "?from=annuaire&tool=supportgenie",
-            "short": "Chat de support client IA disponible 24/7.",
-            "long": "SupportGenie AI répond automatiquement aux questions récurrentes des clients, escalade les cas complexes et réduit la charge du support.",
-            "logo": "/public/_ec0203d3-9974-4f19-ab27-8961569ac101.jpeg",
-            "cat": "Support Client",
-            "tags": "#support #saas #helpdesk",
-        },
-        {
-            "name": "VideoScript Studio",
-            "url": base_url + "?from=annuaire&tool=videoscript",
-            "short": "Génère des scripts pour TikTok, Reels et YouTube en quelques secondes.",
-            "long": "VideoScript Studio aide créateurs et marques à générer des scripts optimisés pour la rétention sur TikTok, Reels et YouTube Shorts.",
-            "logo": "/public/_45a5645a-856c-4e6e-8bbc-4c0d6955ebc3.jpeg",
-            "cat": "Contenu / Vidéo",
-            "tags": "#tiktok #youtube #scripts",
-        },
-        {
-            "name": "DesignPrompt Pro",
-            "url": base_url + "?from=annuaire&tool=designprompt",
-            "short": "Prompts prêts à l’emploi pour créer des visuels cohérents avec votre marque.",
-            "long": "DesignPrompt Pro fournit des prompts structurés pour générer des visuels cohérents avec une charte graphique donnée.",
-            "logo": "/public/_9071e625-9240-4f70-a2b4-1bce79ba1a08.jpeg",
-            "cat": "Design / Création",
-            "tags": "#design #image #prompt",
-        },
-        {
-            "name": "CodeBuddy Autocomplete",
-            "url": base_url + "?from=annuaire&tool=codebuddy",
-            "short": "Complétion de code IA pour accélérer le développement.",
-            "long": "CodeBuddy Autocomplete propose du code intelligent dans votre IDE et suggère des snippets complets pour gagner du temps.",
-            "logo": "/public/_a6447d4d-91cd-4489-9ad7-051b253af9c2.jpeg",
-            "cat": "Développement",
-            "tags": "#dev #autocomplete",
-        },
-        {
-            "name": "DataSense Analytics",
-            "url": base_url + "?from=annuaire&tool=datasense",
-            "short": "Analyse vos ventes et détecte les signaux faibles.",
-            "long": "DataSense Analytics connecte vos sources (e-commerce, facturation, CRM) et repère les signaux faibles dans vos ventes.",
-            "logo": "/public/_da639825-757a-4063-b28c-943ab8fbb39a.jpeg",
-            "cat": "Analytics",
-            "tags": "#data #analytics",
-        },
-        {
-            "name": "MeetingNotes AI",
-            "url": base_url + "?from=annuaire&tool=meetingnotes",
-            "short": "Transcrit vos réunions et envoie un compte rendu structuré.",
-            "long": "MeetingNotes AI enregistre, transcrit et structure vos réunions en plans d’action clairs.",
-            "logo": "/public/_bdfc08c2-1c00-4300-ba77-694125dce085.jpeg",
-            "cat": "Productivité",
-            "tags": "#meetings #notes",
-        },
-
-        # ==============================
-        # 3. OUTILS IA GÉNÉRALISTES
+        # 2. OUTILS IA GÉNÉRALISTES
         # ==============================
         {
             "name": "ChatGPT (OpenAI)",
@@ -195,7 +124,7 @@ def seed_tools(db: sqlite3.Connection) -> None:
         },
 
         # ==============================
-        # 4. IA IMAGES & VIDÉO
+        # 3. IA IMAGES & VIDÉO
         # ==============================
         {
             "name": "Midjourney",
@@ -253,13 +182,13 @@ def seed_tools(db: sqlite3.Connection) -> None:
         },
 
         # ==============================
-        # 5. IA AUDIO & VOIX
+        # 4. IA AUDIO & VOIX
         # ==============================
         {
             "name": "ElevenLabs",
             "url": "https://elevenlabs.io/",
             "short": "Synthèse vocale IA réaliste dans de nombreuses langues.",
-            "long": "ElevenLabs permet de générer des voix naturelles, clone des voix existantes et propose des API pour la narration et le doublage.",
+            "long": "ElevenLabs permet de générer des voix naturelles, cloner des voix existantes et propose des API pour la narration et le doublage.",
             "logo": "",
             "cat": "Audio / Voix",
             "tags": "#voice #elevenlabs #audio",
@@ -293,7 +222,7 @@ def seed_tools(db: sqlite3.Connection) -> None:
         },
 
         # ==============================
-        # 6. IA POUR DÉVELOPPEURS
+        # 5. IA POUR DÉVELOPPEURS
         # ==============================
         {
             "name": "GitHub Copilot",
@@ -360,7 +289,7 @@ def seed_tools(db: sqlite3.Connection) -> None:
         },
 
         # ==============================
-        # 7. IA MARKETING & CONTENU
+        # 6. IA MARKETING & CONTENU
         # ==============================
         {
             "name": "Jasper AI",
@@ -418,7 +347,7 @@ def seed_tools(db: sqlite3.Connection) -> None:
         },
 
         # ==============================
-        # 8. IA PRODUCTIVITÉ & BUREAU
+        # 7. IA PRODUCTIVITÉ & BUREAU
         # ==============================
         {
             "name": "Notion AI",
@@ -458,7 +387,7 @@ def seed_tools(db: sqlite3.Connection) -> None:
         },
 
         # ==============================
-        # 9. AUTOMATION & NO-CODE
+        # 8. AUTOMATION & NO-CODE
         # ==============================
         {
             "name": "Zapier",
@@ -489,7 +418,7 @@ def seed_tools(db: sqlite3.Connection) -> None:
         },
 
         # ==============================
-        # 10. IA ORIENTÉ BUSINESS / PME
+        # 9. IA ORIENTÉ BUSINESS / PME
         # ==============================
         {
             "name": "Durable.co",
@@ -549,7 +478,6 @@ def seed_tools(db: sqlite3.Connection) -> None:
                 now,
             ),
         )
-
 
 
 def init_db() -> None:
@@ -656,7 +584,7 @@ def tool_detail(tool_id: int):
 
 
 # ============================================================
-# AJOUT + STRIPE
+# AJOUT + STRIPE (FORMULAIRE + CHECKOUT)
 # ============================================================
 
 @app.route("/ajouter", methods=["GET", "POST"])
@@ -677,6 +605,7 @@ def ajouter_tool():
 
     created_at = datetime.utcnow().isoformat()
 
+    # On insère l'outil en brouillon (is_published = 0)
     with get_db() as db:
         cur = db.execute(
             """
@@ -700,6 +629,7 @@ def ajouter_tool():
         tool_id = cur.lastrowid
 
     try:
+        # Checkout Stripe avec metadata pour le webhook
         session = stripe.checkout.Session.create(
             mode="payment",
             line_items=[{"price": STRIPE_PRICE_ID, "quantity": 1}],
@@ -711,8 +641,19 @@ def ajouter_tool():
                 url_for("checkout_cancel", _external=True)
                 + f"?tool_id={tool_id}"
             ),
+            metadata={
+                "tool_id": str(tool_id),
+                "name": name,
+                "url": url_site,
+                "short_description": short_desc,
+                "long_description": long_desc,
+                "logo_url": logo_url,
+                "category": category,
+                "tags": tags,
+            },
         )
     except Exception as e:
+        # En cas d'erreur Stripe, on supprime le brouillon
         with get_db() as db:
             db.execute("DELETE FROM tools WHERE id = ?", (tool_id,))
         return f"Erreur Stripe : {e}", 500
@@ -728,6 +669,10 @@ def ajouter():
 
 @app.route("/checkout_success")
 def checkout_success():
+    """
+    Route appelée par Stripe après paiement réussi.
+    Sécurise la publication (en plus du webhook).
+    """
     session_id = request.args.get("session_id")
     tool_id = request.args.get("tool_id")
 
@@ -754,6 +699,50 @@ def checkout_cancel():
                 (tool_id,),
             )
     return "Paiement annulé."
+
+
+# ============================================================
+# STRIPE WEBHOOK (OPTIONNEL MAIS CONSEILLÉ)
+# ============================================================
+
+@app.route("/webhook", methods=["POST"])
+def stripe_webhook():
+    """
+    Webhook Stripe :
+    - Écoute checkout.session.completed
+    - Publie l’outil (is_published = 1) même si l’utilisateur
+      ne revient pas sur la page de succès.
+    """
+    payload = request.data
+    sig_header = request.headers.get("Stripe-Signature")
+    event = None
+
+    try:
+        if STRIPE_WEBHOOK_SECRET:
+            event = stripe.Webhook.construct_event(
+                payload, sig_header, STRIPE_WEBHOOK_SECRET
+            )
+        else:
+            # Sans secret, on parse basiquement le JSON
+            event = request.get_json(force=True)
+    except Exception as e:
+        return str(e), 400
+
+    event_type = event["type"] if isinstance(event, dict) else event.type
+    data_object = event["data"]["object"] if isinstance(event, dict) else event.data.object
+
+    if event_type == "checkout.session.completed":
+        metadata = getattr(data_object, "metadata", None) or data_object.get("metadata", {})
+        tool_id = metadata.get("tool_id")
+
+        if tool_id:
+            with get_db() as db:
+                db.execute(
+                    "UPDATE tools SET is_published = 1 WHERE id = ?",
+                    (tool_id,),
+                )
+
+    return "ok", 200
 
 
 # ============================================================
