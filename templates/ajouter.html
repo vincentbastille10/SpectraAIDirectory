@@ -1,61 +1,41 @@
 {% extends "base.html" %}
 
-{% block title %}Ajouter mon outil IA — Spectra AI Directory{% endblock %}
-{% block meta_description %}Ajoutez votre outil IA dans Spectra AI Directory. Remplissez le formulaire, réglez 20 € via Stripe et votre fiche sera publiée automatiquement dans l’annuaire.{% endblock %}
+{% block title %}Ajouter un outil IA — Référencement dans l’annuaire{% endblock %}
+{% block meta_description %}Référencez votre outil d’intelligence artificielle dans Spectra AI Directory via un formulaire simple et un paiement unique de 20€.{% endblock %}
 
 {% block content %}
-<section class="section form-section">
-  <h1>Ajouter mon outil IA</h1>
-  <p class="form-intro">
-    Remplissez ce formulaire pour proposer votre outil IA. Après validation du
-    formulaire, vous serez redirigé vers une page de paiement Stripe
-    (20&nbsp;€). Lorsque le paiement est confirmé, votre fiche est publiée automatiquement
-    dans l’annuaire.
+<section class="section">
+  <h1>Ajouter votre outil IA</h1>
+  <p>
+    Remplissez ce formulaire pour proposer votre outil d’intelligence artificielle.
+    Après paiement (20€), votre fiche sera publiée dans l’annuaire.
   </p>
 
-  <form action="{{ url_for('ajouter_tool') }}" method="post" class="tool-form">
-    <div class="form-group">
-      <label for="name">Nom de l’outil IA *</label>
-      <input type="text" id="name" name="name" required>
-    </div>
+  <form method="post" class="form-tool">
+    <label for="name">Nom de l’outil *</label>
+    <input id="name" type="text" name="name" required>
 
-    <div class="form-group">
-      <label for="url">URL du site officiel *</label>
-      <input type="url" id="url" name="url" placeholder="https://…" required>
-    </div>
+    <label for="url">URL du site officiel *</label>
+    <input id="url" type="url" name="url" required>
 
-    <div class="form-group">
-      <label for="short_description">Description courte (une ou deux phrases)</label>
-      <textarea id="short_description" name="short_description" rows="2"></textarea>
-    </div>
+    <label for="short_description">Description courte</label>
+    <textarea id="short_description" name="short_description" rows="3"></textarea>
 
-    <div class="form-group">
-      <label for="long_description">Description détaillée (fonctionnement, cible, cas d’usage)</label>
-      <textarea id="long_description" name="long_description" rows="6"></textarea>
-    </div>
+    <label for="long_description">Description détaillée</label>
+    <textarea id="long_description" name="long_description" rows="6"></textarea>
 
-    <div class="form-group">
-      <label for="logo_url">URL du logo (optionnel)</label>
-      <input type="url" id="logo_url" name="logo_url" placeholder="https://…">
-    </div>
+    <label for="logo_url">Logo (URL de l’image, optionnel)</label>
+    <input id="logo_url" type="text" name="logo_url" placeholder="https://...">
 
-    <div class="form-group">
-      <label for="category">Catégorie (ex : CRM, contenu, automatisation, no-code…)</label>
-      <input type="text" id="category" name="category">
-    </div>
+    <label for="category">Catégorie (ex : Assistant IA, Chatbot, Marketing…)</label>
+    <input id="category" type="text" name="category">
 
-    <div class="form-group">
-      <label for="tags">Mots-clés (séparés par des virgules)</label>
-      <input type="text" id="tags" name="tags" placeholder="ex : #marketing, #SaaS, #automation">
-    </div>
+    <label for="tags">Tags (séparés par des virgules)</label>
+    <input id="tags" type="text" name="tags" placeholder="#assistant #automation">
 
-    <p class="form-note">
-      En cliquant sur «&nbsp;Continuer vers le paiement&nbsp;», vous serez
-      redirigé vers Stripe pour régler <strong>20&nbsp;€</strong>. Une fois le paiement
-      confirmé, votre fiche sera <strong>publiée automatiquement</strong> dans l’annuaire.
-    </p>
-
-    <button type="submit" class="btn-primary">Continuer vers le paiement (20&nbsp;€)</button>
+    <button type="submit" class="btn btn-primary">
+      Procéder au paiement (20€)
+    </button>
   </form>
 </section>
 {% endblock %}
