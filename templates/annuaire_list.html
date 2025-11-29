@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Annuaire des outils IA{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="section-header">
+    <div>
+      <h1>Annuaire des outils & agents IA</h1>
+      <p>Tous les créateurs qui ont choisi une visibilité durable pour leur produit.</p>
+    </div>
+    <a href="{{ url_for('ajouter') }}" class="btn btn-primary">+ Ajouter mon outil</a>
+  </div>
+
+  {% if tools %}
+    <div class="card-grid">
+      {% for tool in tools %}
+        <article class="tool-card">
+          <header>
+            {% if tool.logo_url %}
+              <img src="{{ tool.logo_url }}" alt="Logo {{ tool.name }}" class="tool-logo">
+            {% endif %}
+            <h2><a href="{{ url_for('tool_detail', tool_id=tool.id) }}">{{ tool.name }}</a></h2>
+            {% if tool.tagline %}
+              <p class="tool-tagline">{{ tool.tagline }}</p>
+            {% endif %}
+          </header>
+          {% if tool.category or tool.country %}
+          <p class="tool-meta">
+            {% if tool.category %}<span class="pill">{{ tool.category }}</span>{% endif %}
+            {% if tool.country %}<span class="pill pill-soft">{{ tool.country }}</span>{% endif %}
+          </p>
+          {% endif %}
+          {% if tool.description %}
+            <p class="tool-description">
+              {{ tool.description[:180] }}{% if tool.description|length > 180 %}…{% endif %}
+            </p>
+          {% endif %}
+          <div class="tool-actions">
+            <a href="{{ url_for('tool_detail', tool_id=tool.id) }}" class="tool-link">Voir la fiche</a>
+            <a href="{{ tool.website_url }}" target="_blank" class="tool-link">Site officiel →</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>Aucun outil listé pour le moment. Sois le premier.</p>
+  {% endif %}
+</section>
+{% endblock %}

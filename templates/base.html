@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Annuaire Outils IA{% endblock %} – Spectra Media AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Annuaire des créateurs d’outils IA, agents et assistants intelligents. Visibilité, SEO et découverte pour les entreprises.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="{{ url_for('index') }}" class="logo">Spectra<span>AI</span> Directory</a>
+    <nav class="main-nav">
+      <a href="{{ url_for('annuaire') }}">Annuaire</a>
+      <a href="{{ url_for('ajouter') }}" class="btn btn-small">+ Ajouter mon outil</a>
+    </nav>
+  </div>
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<main class="container main-content">
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© {{ 2025 }} Spectra Media AI – Annuaire des créateurs d’IA.</p>
+    <p class="footer-note">Listing unique : 20€ par outil. Visibilité durable & SEO friendly.</p>
+  </div>
+</footer>
+</body>
+</html>

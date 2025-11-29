@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ tool.name }} – Détail{% endblock %}
+{% block content %}
+<article class="section tool-detail">
+  <header class="tool-detail-header">
+    {% if tool.logo_url %}
+      <img src="{{ tool.logo_url }}" alt="Logo {{ tool.name }}" class="tool-detail-logo">
+    {% endif %}
+    <div>
+      <h1>{{ tool.name }}</h1>
+      {% if tool.tagline %}
+        <p class="tool-tagline">{{ tool.tagline }}</p>
+      {% endif %}
+      <p class="tool-meta">
+        {% if tool.category %}<span class="pill">{{ tool.category }}</span>{% endif %}
+        {% if tool.country %}<span class="pill pill-soft">{{ tool.country }}</span>{% endif %}
+      </p>
+      <a href="{{ tool.website_url }}" target="_blank" class="btn btn-primary">Visiter le site officiel</a>
+    </div>
+  </header>
+
+  {% if tool.description %}
+    <section class="tool-detail-section">
+      <h2>Description</h2>
+      <p>{{ tool.description }}</p>
+    </section>
+  {% endif %}
+
+  <section class="tool-detail-section">
+    <h2>Informations</h2>
+    <ul class="tool-info-list">
+      <li><strong>Site :</strong> <a href="{{ tool.website_url }}" target="_blank">{{ tool.website_url }}</a></li>
+      {% if tool.contact_email %}
+      <li><strong>Contact :</strong> <a href="mailto:{{ tool.contact_email }}">{{ tool.contact_email }}</a></li>
+      {% endif %}
+      {% if tool.created_at %}
+      <li><strong>Ajouté le :</strong> {{ tool.created_at[:10] }}</li>
+      {% endif %}
+    </ul>
+  </section>
+</article>
+{% endblock %}

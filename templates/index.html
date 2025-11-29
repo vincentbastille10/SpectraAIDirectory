@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Annuaire des créateurs d’IA{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-text">
+    <h1>Ton outil IA mérite mieux qu’un tweet perdu.</h1>
+    <p class="hero-subtitle">
+      Annuaire spécialisé pour <strong>agents, assistants IA et outils d’automatisation</strong>.
+      Une page dédiée, un lien SEO propre, une vitrine claire pour les entreprises.
+    </p>
+    <div class="hero-actions">
+      <a href="{{ url_for('ajouter') }}" class="btn btn-primary">+ Ajouter mon outil (20€)</a>
+      <a href="{{ url_for('annuaire') }}" class="btn btn-ghost">Voir les outils listés</a>
+    </div>
+    {% if not g.stripe_enabled %}
+      <p class="demo-note">
+        <strong>Mode démo actif :</strong> pour l’instant, l’ajout est sans paiement.
+        Ajoute simplement tes clés Stripe dans <code>.env</code> pour activer le mode payant.
+      </p>
+    {% endif %}
+  </div>
+  <div class="hero-side">
+    <div class="stat-card">
+      <span class="stat-label">Listing unique</span>
+      <span class="stat-value">20€</span>
+      <span class="stat-caption">A vie, pas d’abonnement.</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Pensé pour</span>
+      <span class="stat-value">Créateurs d’IA</span>
+      <span class="stat-caption">Agents, bots, API & SaaS.</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Derniers outils ajoutés</h2>
+  {% if tools %}
+    <div class="card-grid">
+      {% for tool in tools %}
+        <article class="tool-card">
+          <header>
+            {% if tool.logo_url %}
+              <img src="{{ tool.logo_url }}" alt="Logo {{ tool.name }}" class="tool-logo">
+            {% endif %}
+            <h3><a href="{{ url_for('tool_detail', tool_id=tool.id) }}">{{ tool.name }}</a></h3>
+            {% if tool.tagline %}
+              <p class="tool-tagline">{{ tool.tagline }}</p>
+            {% endif %}
+          </header>
+          {% if tool.category or tool.country %}
+          <p class="tool-meta">
+            {% if tool.category %}<span class="pill">{{ tool.category }}</span>{% endif %}
+            {% if tool.country %}<span class="pill pill-soft">{{ tool.country }}</span>{% endif %}
+          </p>
+          {% endif %}
+          <a href="{{ tool.website_url }}" target="_blank" class="tool-link">Visiter le site →</a>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>Personne n’est encore listé. Sois le premier à réserver ta place.</p>
+  {% endif %}
+</section>
+{% endblock %}

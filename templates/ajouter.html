@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Ajouter mon outil IA{% endblock %}
+{% block content %}
+<section class="section">
+  <h1>Ajouter mon outil IA dans l’annuaire</h1>
+  <p class="section-intro">
+    Remplis ce formulaire pour créer ta fiche. En production, un paiement unique de <strong>20€</strong> est demandé
+    pour valider le listing. En mode démo, l’enregistrement se fait sans paiement.
+  </p>
+
+  {% if not g.stripe_enabled %}
+    <p class="demo-note">
+      <strong>Mode démo :</strong> Stripe n’est pas configuré. Ta fiche sera ajoutée directement, sans paiement.
+    </p>
+  {% endif %}
+
+  <form method="post" class="tool-form">
+    <div class="form-grid">
+      <label>
+        Nom de l’outil / agent IA *
+        <input type="text" name="name" required placeholder="Ex : Betty Bot – Assistante IA pour commerçants">
+      </label>
+
+      <label>
+        Tagline courte
+        <input type="text" name="tagline" placeholder="En une phrase : ce que fait ton outil.">
+      </label>
+
+      <label>
+        URL du site / landing page *
+        <input type="url" name="website_url" required placeholder="https://…">
+      </label>
+
+      <label>
+        Email de contact
+        <input type="email" name="contact_email" placeholder="Pour les prospects intéressés">
+      </label>
+
+      <label>
+        Catégorie
+        <input type="text" name="category" placeholder="Ex : Agent IA, Chatbot, SaaS, API, Automation…">
+      </label>
+
+      <label>
+        Pays
+        <input type="text" name="country" placeholder="Ex : France, Suisse, Canada…">
+      </label>
+
+      <label class="full-width">
+        URL du logo (optionnel)
+        <input type="url" name="logo_url" placeholder="https://…">
+      </label>
+
+      <label class="full-width">
+        Description détaillée
+        <textarea name="description" rows="5" placeholder="Explique en quelques lignes à qui s’adresse ton outil, ce qu’il fait et en quoi il est différent."></textarea>
+      </label>
+    </div>
+
+    <div class="form-actions">
+      {% if g.stripe_enabled %}
+        <button type="submit" class="btn btn-primary">Payer 20€ et créer ma fiche</button>
+      {% else %}
+        <button type="submit" class="btn btn-primary">Créer ma fiche (mode démo, sans paiement)</button>
+      {% endif %}
+    </div>
+  </form>
+</section>
+{% endblock %}
