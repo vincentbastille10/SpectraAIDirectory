@@ -1,15 +1,19 @@
 {% extends "base.html" %}
-{% block title %}Merci pour ton soutien{% endblock %}
+
+{% block title %}Référencement confirmé — Votre outil IA va être publié{% endblock %}
+{% block meta_description %}Votre paiement a été confirmé. Votre outil IA sera bientôt visible dans l’annuaire Spectra AI Directory.{% endblock %}
+
 {% block content %}
 <section class="section">
-  <h1>Merci !</h1>
-  <p>Le paiement a bien été confirmé et ton outil <strong>{{ tool_name }}</strong> vient d’être ajouté à l’annuaire.</p>
-  <p>Tu peux maintenant :</p>
-  <ul>
-    <li>Partager ta fiche à tes utilisateurs,</li>
-    <li>Utiliser le listing comme preuve sociale / SEO,</li>
-    <li>Suivre l’évolution du trafic depuis ton propre analytics.</li>
-  </ul>
-  <a href="{{ url_for('annuaire') }}" class="btn btn-primary">Voir l’annuaire</a>
+  <h1>Référencement confirmé ✔️</h1>
+  <p>
+    Merci pour votre confiance. Votre paiement a bien été enregistré et votre outil IA
+    sera publié dans l’annuaire après validation.
+  </p>
+
+  <p>
+    Vous pouvez dès maintenant consulter
+    <a href="{{ url_for('annuaire_list') }}">l’annuaire des outils IA</a>.
+  </p>
 </section>
 {% endblock %}
