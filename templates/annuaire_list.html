@@ -6,44 +6,79 @@
 {% block content %}
 <section class="section">
   <div class="section-header">
-    <h1>Annuaire des outils IA</h1>
-    <p>
-      Tous les outils listés ci-dessous disposent d’une fiche dédiée avec
-      description, cas d’usage et lien vers le site officiel.
-    </p>
+    <div>
+      <h1>Annuaire des outils IA</h1>
+      <p>
+        Tous les outils listés ci-dessous disposent d’une fiche dédiée avec
+        description, cas d’usage et lien vers le site officiel.
+      </p>
+      {% if query %}
+        <p><em>Filtre actif&nbsp;: «&nbsp;{{ query }}&nbsp;»</em></p>
+      {% endif %}
+    </div>
+
+    <!-- Barre de recherche -->
+    <form class="search-bar" method="get" action="{{ url_for('annuaire_list') }}">
+      <input
+        type="text"
+        name="q"
+        value="{{ query or '' }}"
+        placeholder="Rechercher un outil IA (ex : chatbot, PME, e-commerce…)"
+        aria-label="Rechercher un outil IA"
+      >
+      <button type="submit">Rechercher</button>
+    </form>
   </div>
 
   {% if tools %}
     <div class="cards-grid">
       {% for tool in tools %}
-        <article class="tool-card">
+        <article class="tool-card {% if tool['name'].startswith('Betty Bots') %}tool-card-featured{% endif %}">
           {% if tool['logo_url'] %}
             <div class="tool-logo">
               <img src="{{ tool['logo_url'] }}" alt="Logo {{ tool['name'] }}">
             </div>
           {% endif %}
+
           <h2>
             <a href="{{ url_for('tool_detail', tool_id=tool['id']) }}">
               {{ tool['name'] }}
             </a>
           </h2>
+
+          {% if tool['name'].startswith('Betty Bots') %}
+            <p class="badge-featured">Mise en avant — Assistant IA pour entreprises</p>
+          {% endif %}
+
           {% if tool['short_description'] %}
             <p class="tool-short">{{ tool['short_description'] }}</p>
           {% endif %}
+
           <p class="tool-meta">
             <span class="tool-category">{{ tool['category'] or "Outil IA" }}</span>
             {% if tool['tags'] %}
               · <span class="tool-tags">{{ tool['tags'] }}</span>
             {% endif %}
           </p>
+
           <p class="tool-link">
-            <a href="{{ tool['url'] }}" target="_blank" rel="noopener">Visiter le site de l’outil →</a>
+            <a href="{{ tool['url'] }}" target="_blank" rel="noopener">
+              Visiter le site de l’outil →
+            </a>
           </p>
         </article>
       {% endfor %}
     </div>
   {% else %}
-    <p>Aucun outil n’a encore été publié. Revenez bientôt ou <a href="{{ url_for('ajouter_tool') }}">ajoutez le vôtre</a>.</p>
+    <p>
+      Aucun outil ne correspond à votre recherche.
+      {% if query %}
+        <br>Essayez un autre mot (ex&nbsp;: «&nbsp;chatbot&nbsp;», «&nbsp;PME&nbsp;», «&nbsp;support client&nbsp;»)
+      {% else %}
+        Aucun outil n’a encore été publié. Revenez bientôt ou
+        <a href="{{ url_for('ajouter_tool') }}">ajoutez le vôtre</a>.
+      {% endif %}
+    </p>
   {% endif %}
 </section>
 {% endblock %}
