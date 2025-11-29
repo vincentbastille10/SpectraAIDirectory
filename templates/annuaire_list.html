@@ -1,48 +1,49 @@
 {% extends "base.html" %}
-{% block title %}Annuaire des outils IA{% endblock %}
+
+{% block title %}Annuaire des outils IA — Spectra AI Directory{% endblock %}
+{% block meta_description %}Liste complète des outils d’intelligence artificielle référencés dans Spectra AI Directory : solutions IA pour automatiser, générer du contenu, analyser des données et développer votre activité.{% endblock %}
+
 {% block content %}
 <section class="section">
   <div class="section-header">
-    <div>
-      <h1>Annuaire des outils & agents IA</h1>
-      <p>Tous les créateurs qui ont choisi une visibilité durable pour leur produit.</p>
-    </div>
-    <a href="{{ url_for('ajouter') }}" class="btn btn-primary">+ Ajouter mon outil</a>
+    <h1>Annuaire des outils IA</h1>
+    <p>
+      Tous les outils listés ci-dessous disposent d’une fiche dédiée avec
+      description, cas d’usage et lien vers le site officiel.
+    </p>
   </div>
 
   {% if tools %}
-    <div class="card-grid">
+    <div class="cards-grid">
       {% for tool in tools %}
         <article class="tool-card">
-          <header>
-            {% if tool.logo_url %}
-              <img src="{{ tool.logo_url }}" alt="Logo {{ tool.name }}" class="tool-logo">
-            {% endif %}
-            <h2><a href="{{ url_for('tool_detail', tool_id=tool.id) }}">{{ tool.name }}</a></h2>
-            {% if tool.tagline %}
-              <p class="tool-tagline">{{ tool.tagline }}</p>
-            {% endif %}
-          </header>
-          {% if tool.category or tool.country %}
+          {% if tool['logo_url'] %}
+            <div class="tool-logo">
+              <img src="{{ tool['logo_url'] }}" alt="Logo {{ tool['name'] }}">
+            </div>
+          {% endif %}
+          <h2>
+            <a href="{{ url_for('tool_detail', tool_id=tool['id']) }}">
+              {{ tool['name'] }}
+            </a>
+          </h2>
+          {% if tool['short_description'] %}
+            <p class="tool-short">{{ tool['short_description'] }}</p>
+          {% endif %}
           <p class="tool-meta">
-            {% if tool.category %}<span class="pill">{{ tool.category }}</span>{% endif %}
-            {% if tool.country %}<span class="pill pill-soft">{{ tool.country }}</span>{% endif %}
+            <span class="tool-category">{{ tool['category'] or "Outil IA" }}</span>
+            {% if tool['tags'] %}
+              · <span class="tool-tags">{{ tool['tags'] }}</span>
+            {% endif %}
           </p>
-          {% endif %}
-          {% if tool.description %}
-            <p class="tool-description">
-              {{ tool.description[:180] }}{% if tool.description|length > 180 %}…{% endif %}
-            </p>
-          {% endif %}
-          <div class="tool-actions">
-            <a href="{{ url_for('tool_detail', tool_id=tool.id) }}" class="tool-link">Voir la fiche</a>
-            <a href="{{ tool.website_url }}" target="_blank" class="tool-link">Site officiel →</a>
-          </div>
+          <p class="tool-link">
+            <a href="{{ tool['url'] }}" target="_blank" rel="noopener">Visiter le site de l’outil →</a>
+          </p>
         </article>
       {% endfor %}
     </div>
   {% else %}
-    <p>Aucun outil listé pour le moment. Sois le premier.</p>
+    <p>Aucun outil n’a encore été publié. Revenez bientôt ou <a href="{{ url_for('ajouter_tool') }}">ajoutez le vôtre</a>.</p>
   {% endif %}
 </section>
 {% endblock %}
