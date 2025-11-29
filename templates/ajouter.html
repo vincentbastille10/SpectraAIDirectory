@@ -1,69 +1,61 @@
 {% extends "base.html" %}
-{% block title %}Ajouter mon outil IA{% endblock %}
+
+{% block title %}Ajouter mon outil IA — Spectra AI Directory{% endblock %}
+{% block meta_description %}Ajoutez votre outil IA dans Spectra AI Directory. Remplissez le formulaire, réglez 20 € via Stripe et votre fiche sera publiée automatiquement dans l’annuaire.{% endblock %}
+
 {% block content %}
-<section class="section">
-  <h1>Ajouter mon outil IA dans l’annuaire</h1>
-  <p class="section-intro">
-    Remplis ce formulaire pour créer ta fiche. En production, un paiement unique de <strong>20€</strong> est demandé
-    pour valider le listing. En mode démo, l’enregistrement se fait sans paiement.
+<section class="section form-section">
+  <h1>Ajouter mon outil IA</h1>
+  <p class="form-intro">
+    Remplissez ce formulaire pour proposer votre outil IA. Après validation du
+    formulaire, vous serez redirigé vers une page de paiement Stripe
+    (20&nbsp;€). Lorsque le paiement est confirmé, votre fiche est publiée automatiquement
+    dans l’annuaire.
   </p>
 
-  {% if not g.stripe_enabled %}
-    <p class="demo-note">
-      <strong>Mode démo :</strong> Stripe n’est pas configuré. Ta fiche sera ajoutée directement, sans paiement.
+  <form action="{{ url_for('ajouter_tool') }}" method="post" class="tool-form">
+    <div class="form-group">
+      <label for="name">Nom de l’outil IA *</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="url">URL du site officiel *</label>
+      <input type="url" id="url" name="url" placeholder="https://…" required>
+    </div>
+
+    <div class="form-group">
+      <label for="short_description">Description courte (une ou deux phrases)</label>
+      <textarea id="short_description" name="short_description" rows="2"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="long_description">Description détaillée (fonctionnement, cible, cas d’usage)</label>
+      <textarea id="long_description" name="long_description" rows="6"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="logo_url">URL du logo (optionnel)</label>
+      <input type="url" id="logo_url" name="logo_url" placeholder="https://…">
+    </div>
+
+    <div class="form-group">
+      <label for="category">Catégorie (ex : CRM, contenu, automatisation, no-code…)</label>
+      <input type="text" id="category" name="category">
+    </div>
+
+    <div class="form-group">
+      <label for="tags">Mots-clés (séparés par des virgules)</label>
+      <input type="text" id="tags" name="tags" placeholder="ex : #marketing, #SaaS, #automation">
+    </div>
+
+    <p class="form-note">
+      En cliquant sur «&nbsp;Continuer vers le paiement&nbsp;», vous serez
+      redirigé vers Stripe pour régler <strong>20&nbsp;€</strong>. Une fois le paiement
+      confirmé, votre fiche sera <strong>publiée automatiquement</strong> dans l’annuaire.
     </p>
-  {% endif %}
 
-  <form method="post" class="tool-form">
-    <div class="form-grid">
-      <label>
-        Nom de l’outil / agent IA *
-        <input type="text" name="name" required placeholder="Ex : Betty Bot – Assistante IA pour commerçants">
-      </label>
-
-      <label>
-        Tagline courte
-        <input type="text" name="tagline" placeholder="En une phrase : ce que fait ton outil.">
-      </label>
-
-      <label>
-        URL du site / landing page *
-        <input type="url" name="website_url" required placeholder="https://…">
-      </label>
-
-      <label>
-        Email de contact
-        <input type="email" name="contact_email" placeholder="Pour les prospects intéressés">
-      </label>
-
-      <label>
-        Catégorie
-        <input type="text" name="category" placeholder="Ex : Agent IA, Chatbot, SaaS, API, Automation…">
-      </label>
-
-      <label>
-        Pays
-        <input type="text" name="country" placeholder="Ex : France, Suisse, Canada…">
-      </label>
-
-      <label class="full-width">
-        URL du logo (optionnel)
-        <input type="url" name="logo_url" placeholder="https://…">
-      </label>
-
-      <label class="full-width">
-        Description détaillée
-        <textarea name="description" rows="5" placeholder="Explique en quelques lignes à qui s’adresse ton outil, ce qu’il fait et en quoi il est différent."></textarea>
-      </label>
-    </div>
-
-    <div class="form-actions">
-      {% if g.stripe_enabled %}
-        <button type="submit" class="btn btn-primary">Payer 20€ et créer ma fiche</button>
-      {% else %}
-        <button type="submit" class="btn btn-primary">Créer ma fiche (mode démo, sans paiement)</button>
-      {% endif %}
-    </div>
+    <button type="submit" class="btn-primary">Continuer vers le paiement (20&nbsp;€)</button>
   </form>
 </section>
 {% endblock %}
