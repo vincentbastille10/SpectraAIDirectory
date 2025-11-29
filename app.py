@@ -52,146 +52,150 @@ def get_db():
         conn.close()
 
 
-def seed_tools(db: sqlite3.Connection):
-    """Ajoute des outils IA crédibles s'il n'y en a aucun."""
+def seed_tools(db: sqlite3.Connection) -> None:
+    """Ajoute des outils IA crédibles s'il n'y en a aucun (avec logos)."""
     now = datetime.utcnow().isoformat()
 
     seeds = [
         {
             "name": "Betty Bots — Assistante IA métier",
             "url": "https://www.spectramedia.online/",
-            "short": "Flotte d’assistantes IA spécialisées par métier qui qualifient vos leads.",
-            "long": "Betty Bots est une flotte d’assistantes IA spécialisées par métier (artisan, restauration, esthétique…). "
-                    "Elles répondent aux prospects, posent les bonnes questions et envoient tout par email.",
-            "logo": "",
-            "cat": "Assistant IA",
-            "tags": "#leadgen #assistantIA",
+            "short": "Flotte d’assistantes IA spécialisées par métier qui qualifient vos leads automatiquement.",
+            "long": (
+                "Betty Bots est une flotte d’assistantes IA spécialisées par métier "
+                "(artisan, restauration, esthétique, médical, immobilier…). "
+                "Chaque Betty répond comme une vraie assistante humaine, pose les bonnes questions, "
+                "qualifie les prospects et envoie des emails prêts à traiter."
+            ),
+            "logo": "https://via.placeholder.com/64/FF3366/FFFFFF?text=BB",
+            "cat": "Assistant IA / Lead gen",
+            "tags": "#leads #PME #assistantIA",
         },
         {
             "name": "SalesPilot AI",
             "url": "https://example.com/salespilot",
-            "short": "Relances commerciales et scoring automatique.",
+            "short": "Relances commerciales automatiques et scoring de prospects.",
             "long": "",
-            "logo": "",
+            "logo": "https://via.placeholder.com/64/1E90FF/FFFFFF?text=SP",
             "cat": "Sales Automation",
-            "tags": "#sales",
+            "tags": "#sales #crm #automation",
         },
         {
             "name": "DocuSense IA",
             "url": "https://example.com/docusense",
-            "short": "Posez des questions à vos PDF.",
+            "short": "Posez des questions à vos PDF, contrats et procédures internes.",
             "long": "",
-            "logo": "",
-            "cat": "Knowledge",
-            "tags": "#pdf #qa",
+            "logo": "https://via.placeholder.com/64/32CD32/FFFFFF?text=DS",
+            "cat": "Knowledge Base",
+            "tags": "#documentation #pdf #qa",
         },
         {
             "name": "SupportGenie AI",
             "url": "https://example.com/supportgenie",
-            "short": "Support client IA 24/7.",
+            "short": "Chat de support client IA disponible 24/7.",
             "long": "",
-            "logo": "",
-            "cat": "Support",
-            "tags": "#support",
+            "logo": "https://via.placeholder.com/64/FFD700/000000?text=SG",
+            "cat": "Support Client",
+            "tags": "#support #saas #helpdesk",
         },
         {
             "name": "VideoScript Studio",
             "url": "https://example.com/videoscript",
-            "short": "Scripts automatiques pour TikTok, YouTube.",
+            "short": "Génère des scripts pour TikTok, Reels et YouTube en quelques secondes.",
             "long": "",
-            "logo": "",
-            "cat": "Video",
-            "tags": "#video #tiktok",
+            "logo": "https://via.placeholder.com/64/8A2BE2/FFFFFF?text=VS",
+            "cat": "Contenu / Vidéo",
+            "tags": "#tiktok #youtube #scripts",
         },
         {
             "name": "DesignPrompt Pro",
             "url": "https://example.com/designprompt",
-            "short": "Prompts prêts pour générer des visuels cohérents.",
+            "short": "Prompts prêts à l’emploi pour créer des visuels cohérents avec votre marque.",
             "long": "",
-            "logo": "",
-            "cat": "Design",
-            "tags": "#prompt #design",
+            "logo": "https://via.placeholder.com/64/FF8C00/FFFFFF?text=DP",
+            "cat": "Design / Création",
+            "tags": "#design #image #prompt",
         },
         {
             "name": "CodeBuddy Autocomplete",
             "url": "https://example.com/codebuddy",
-            "short": "Complétion de code IA.",
+            "short": "Complétion de code IA pour accélérer le développement.",
             "long": "",
-            "logo": "",
+            "logo": "https://via.placeholder.com/64/00CED1/FFFFFF?text=CB",
             "cat": "Développement",
-            "tags": "#dev",
+            "tags": "#dev #autocomplete",
         },
         {
             "name": "HRMatch IA",
             "url": "https://example.com/hrmatch",
-            "short": "Filtre vos CV automatiquement.",
+            "short": "Filtre les CV et propose une short-list de candidats.",
             "long": "",
-            "logo": "",
-            "cat": "RH",
-            "tags": "#cv #rh",
+            "logo": "https://via.placeholder.com/64/DC143C/FFFFFF?text=HR",
+            "cat": "RH / Recrutement",
+            "tags": "#rh #recrutement #cv",
         },
         {
             "name": "LegalDraft AI",
             "url": "https://example.com/legaldraft",
-            "short": "Contrats générés automatiquement.",
+            "short": "Assistance à la rédaction de contrats et courriers juridiques.",
             "long": "",
-            "logo": "",
+            "logo": "https://via.placeholder.com/64/2F4F4F/FFFFFF?text=LD",
             "cat": "Légal",
-            "tags": "#legal",
+            "tags": "#legal #contrats",
         },
         {
             "name": "EmailFlow Optimizer",
             "url": "https://example.com/emailflow",
-            "short": "Optimisation IA des emails marketing.",
+            "short": "Optimisation IA de vos séquences d’emails marketing.",
             "long": "",
-            "logo": "",
-            "cat": "Email",
-            "tags": "#email",
+            "logo": "https://via.placeholder.com/64/FF1493/FFFFFF?text=EF",
+            "cat": "Emailing",
+            "tags": "#email #marketing",
         },
         {
             "name": "SocialBoost AI",
             "url": "https://example.com/socialboost",
-            "short": "Posts automatiques adaptés aux réseaux.",
+            "short": "Propose des posts adaptés à chaque réseau social.",
             "long": "",
-            "logo": "",
+            "logo": "https://via.placeholder.com/64/7FFF00/000000?text=SB",
             "cat": "Social Media",
-            "tags": "#social",
+            "tags": "#socialmedia #content",
         },
         {
             "name": "DataSense Analytics",
             "url": "https://example.com/datasense",
-            "short": "Analyse vos ventes + signaux faibles.",
+            "short": "Analyse vos ventes et détecte les signaux faibles.",
             "long": "",
-            "logo": "",
+            "logo": "https://via.placeholder.com/64/00BFFF/FFFFFF?text=DA",
             "cat": "Analytics",
-            "tags": "#analytics",
+            "tags": "#data #analytics",
         },
         {
             "name": "MeetingNotes AI",
             "url": "https://example.com/meetingnotes",
-            "short": "Compte-rendu automatique de vos réunions.",
+            "short": "Transcrit vos réunions et envoie un compte rendu structuré.",
             "long": "",
-            "logo": "",
+            "logo": "https://via.placeholder.com/64/FF4500/FFFFFF?text=MN",
             "cat": "Productivité",
-            "tags": "#meetings",
+            "tags": "#meetings #notes",
         },
         {
             "name": "VoiceAssist Studio",
             "url": "https://example.com/voiceassist",
-            "short": "Assistants vocaux IA pour hotline.",
+            "short": "Crée des assistants vocaux IA pour hotline et standard téléphonique.",
             "long": "",
-            "logo": "",
-            "cat": "Voix",
-            "tags": "#voice",
+            "logo": "https://via.placeholder.com/64/4B0082/FFFFFF?text=VA",
+            "cat": "Voix / Téléphonie",
+            "tags": "#voice #ivr",
         },
         {
             "name": "EcomPricing IA",
             "url": "https://example.com/ecompricing",
-            "short": "Optimisation automatique de prix e-commerce.",
+            "short": "Optimise automatiquement les prix de votre boutique en ligne.",
             "long": "",
-            "logo": "",
+            "logo": "https://via.placeholder.com/64/228B22/FFFFFF?text=EP",
             "cat": "E-commerce",
-            "tags": "#pricing",
+            "tags": "#ecommerce #pricing",
         },
     ]
 
@@ -204,13 +208,23 @@ def seed_tools(db: sqlite3.Connection):
             )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)
             """,
-            (t["name"], t["url"], t["short"], t["long"], t["logo"], t["cat"], t["tags"], now),
+            (
+                t["name"],
+                t["url"],
+                t["short"],
+                t["long"],
+                t["logo"],
+                t["cat"],
+                t["tags"],
+                now,
+            ),
         )
 
 
-def init_db():
+def init_db() -> None:
     with get_db() as db:
-        db.execute("""
+        db.execute(
+            """
             CREATE TABLE IF NOT EXISTS tools (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
@@ -223,55 +237,102 @@ def init_db():
                 created_at TEXT NOT NULL,
                 is_published INTEGER NOT NULL DEFAULT 0
             );
-        """)
-
+            """
+        )
         row = db.execute("SELECT COUNT(*) AS c FROM tools").fetchone()
         if row["c"] == 0:
             seed_tools(db)
 
 
 # ============================================================
-# ROUTES
+# ROUTES PRINCIPALES (HOME + ANNUIRE + FICHE)
 # ============================================================
 
 @app.route("/")
 def index():
+    """Home : présentation + derniers outils (Betty toujours en tête)."""
     with get_db() as db:
-        tools = db.execute("""
+        tools = db.execute(
+            """
             SELECT id, name, url, short_description, logo_url, category, tags
             FROM tools
             WHERE is_published = 1
-            ORDER BY id DESC
+            ORDER BY
+                CASE WHEN name LIKE 'Betty Bots%' THEN 0 ELSE 1 END,
+                created_at DESC
             LIMIT 6;
-        """).fetchall()
+            """
+        ).fetchall()
+
     return render_template("index.html", tools=tools)
 
 
 @app.route("/annuaire")
 def annuaire_list():
+    """
+    Liste complète + recherche.
+    ?q=term → filtre sur nom / catégorie / tags / descriptions.
+    Betty Bots reste toujours en premier.
+    """
+    q = request.args.get("q", "").strip()
     with get_db() as db:
-        tools = db.execute("""
-            SELECT id, name, url, short_description, logo_url, category, tags
-            FROM tools
-            WHERE is_published = 1
-            ORDER BY id DESC;
-        """).fetchall()
-    return render_template("annuaire_list.html", tools=tools)
+        if q:
+            pattern = f"%{q}%"
+            tools = db.execute(
+                """
+                SELECT id, name, url, short_description, logo_url, category, tags
+                FROM tools
+                WHERE is_published = 1
+                  AND (
+                    name LIKE ?
+                    OR url LIKE ?
+                    OR short_description LIKE ?
+                    OR long_description LIKE ?
+                    OR category LIKE ?
+                    OR tags LIKE ?
+                  )
+                ORDER BY
+                    CASE WHEN name LIKE 'Betty Bots%' THEN 0 ELSE 1 END,
+                    created_at DESC;
+                """,
+                (pattern, pattern, pattern, pattern, pattern, pattern),
+            ).fetchall()
+        else:
+            tools = db.execute(
+                """
+                SELECT id, name, url, short_description, logo_url, category, tags
+                FROM tools
+                WHERE is_published = 1
+                ORDER BY
+                    CASE WHEN name LIKE 'Betty Bots%' THEN 0 ELSE 1 END,
+                    created_at DESC;
+                """
+            ).fetchall()
+
+    return render_template("annuaire_list.html", tools=tools, query=q)
 
 
 @app.route("/tool/<int:tool_id>")
-def tool_detail(tool_id):
+def tool_detail(tool_id: int):
     with get_db() as db:
-        tool = db.execute("""
+        tool = db.execute(
+            """
             SELECT *
             FROM tools
-            WHERE id = ? AND is_published = 1
-        """, (tool_id,)).fetchone()
+            WHERE id = ? AND is_published = 1;
+            """,
+            (tool_id,),
+        ).fetchone()
 
     if not tool:
         abort(404)
+
     return render_template("tool_detail.html", tool=tool)
 
+
+# ============================================================
+# AJOUT + STRIPE
+# ============================================================
 
 @app.route("/ajouter", methods=["GET", "POST"])
 def ajouter_tool():
@@ -292,23 +353,39 @@ def ajouter_tool():
     created_at = datetime.utcnow().isoformat()
 
     with get_db() as db:
-        cur = db.execute("""
+        cur = db.execute(
+            """
             INSERT INTO tools (
                 name, url, short_description, long_description,
                 logo_url, category, tags, created_at, is_published
             )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)
-        """, (name, url_site, short_desc, long_desc, logo_url, category, tags, created_at))
+            """,
+            (
+                name,
+                url_site,
+                short_desc,
+                long_desc,
+                logo_url,
+                category,
+                tags,
+                created_at,
+            ),
+        )
         tool_id = cur.lastrowid
 
     try:
         session = stripe.checkout.Session.create(
             mode="payment",
             line_items=[{"price": STRIPE_PRICE_ID, "quantity": 1}],
-            success_url=url_for("checkout_success", _external=True)
-                        + f"?session_id={{CHECKOUT_SESSION_ID}}&tool_id={tool_id}",
-            cancel_url=url_for("checkout_cancel", _external=True)
-                       + f"?tool_id={tool_id}",
+            success_url=(
+                url_for("checkout_success", _external=True)
+                + f"?session_id={{CHECKOUT_SESSION_ID}}&tool_id={tool_id}"
+            ),
+            cancel_url=(
+                url_for("checkout_cancel", _external=True)
+                + f"?tool_id={tool_id}"
+            ),
         )
     except Exception as e:
         with get_db() as db:
@@ -341,21 +418,25 @@ def checkout_cancel():
     tool_id = request.args.get("tool_id")
     if tool_id:
         with get_db() as db:
-            db.execute("DELETE FROM tools WHERE id = ? AND is_published = 0", (tool_id,))
+            db.execute(
+                "DELETE FROM tools WHERE id = ? AND is_published = 0",
+                (tool_id,),
+            )
     return "Paiement annulé."
 
 
 # ============================================================
-# GOOGLE SEARCH CONSOLE (fichier HTML)
+# GOOGLE SEARCH CONSOLE (FICHIER HTML)
 # ============================================================
 
 @app.route("/google8334646a4a411e97.html")
 def google_verification():
+    # Doit correspondre EXACTEMENT au fichier donné par Google
     return "google-site-verification: google8334646a4a411e97.html"
 
 
 # ============================================================
-# ROBOTS.TXT + SITEMAP
+# ROBOTS.TXT + SITEMAP (SEO)
 # ============================================================
 
 @app.route("/robots.txt")
@@ -376,22 +457,30 @@ def sitemap_xml():
     ]
 
     with get_db() as db:
-        tools = db.execute("""
+        tools = db.execute(
+            """
             SELECT id, created_at
             FROM tools
             WHERE is_published = 1
-            ORDER BY id DESC;
-        """).fetchall()
+            ORDER BY
+                CASE WHEN name LIKE 'Betty Bots%' THEN 0 ELSE 1 END,
+                created_at DESC;
+            """
+        ).fetchall()
 
     for t in tools:
-        urls.append({
-            "loc": f"{base}/tool/{t['id']}",
-            "priority": "0.8",
-            "lastmod": t["created_at"],
-        })
+        urls.append(
+            {
+                "loc": f"{base}/tool/{t['id']}",
+                "priority": "0.8",
+                "lastmod": t["created_at"],
+            }
+        )
 
-    xml = ['<?xml version="1.0" encoding="UTF-8"?>',
-           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    xml = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
 
     for u in urls:
         xml.append("  <url>")
@@ -407,7 +496,7 @@ def sitemap_xml():
 
 
 # ============================================================
-# INIT AUTO
+# INIT DB AU DÉMARRAGE
 # ============================================================
 
 with app.app_context():
