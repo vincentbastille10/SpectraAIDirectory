@@ -13,9 +13,9 @@
   <!-- Canonical -->
   <link rel="canonical" href="{{ request.url }}" />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="{% block og_title %}{{ self.title()|striptags }}{% endblock %}">
-  <meta property="og:description" content="{% block og_description %}{{ self.meta_description()|striptags }}{% endblock %}">
+  <!-- Open Graph basique (pas de blocs imbriqués) -->
+  <meta property="og:title" content="{{ self.title()|striptags }}">
+  <meta property="og:description" content="{{ self.meta_description()|striptags }}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ request.url }}">
 
