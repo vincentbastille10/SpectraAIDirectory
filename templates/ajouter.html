@@ -1,41 +1,118 @@
 {% extends "base.html" %}
 
-{% block title %}Ajouter un outil IA — Référencement dans l’annuaire{% endblock %}
+{% block title %}Ajouter un outil IA — Spectra AI Directory{% endblock %}
 {% block meta_description %}Référencez votre outil d’intelligence artificielle dans Spectra AI Directory via un formulaire simple et un paiement unique de 20€.{% endblock %}
 
 {% block content %}
-<section class="section">
-  <h1>Ajouter votre outil IA</h1>
-  <p>
-    Remplissez ce formulaire pour proposer votre outil d’intelligence artificielle.
-    Après paiement (20€), votre fiche sera publiée dans l’annuaire.
-  </p>
+<section class="section add-tool-section">
+  <div class="add-tool-layout">
 
-  <form method="post" class="form-tool">
-    <label for="name">Nom de l’outil *</label>
-    <input id="name" type="text" name="name" required>
+    <!-- Colonne gauche : contexte + bénéfices -->
+    <div class="add-tool-intro">
+      <p class="eyebrow">Référencement payant · 20€ TTC</p>
+      <h1>Ajouter votre outil IA à l’annuaire</h1>
+      <p class="intro-text">
+        Spectra AI Directory met en avant des outils d’intelligence artificielle utiles
+        aux TPE, PME, freelances et créateurs. En quelques minutes, votre solution
+        dispose d’une fiche dédiée, prête à être trouvée par vos futurs clients.
+      </p>
 
-    <label for="url">URL du site officiel *</label>
-    <input id="url" type="url" name="url" required>
+      <div class="benefits-list">
+        <h2>Ce que vous obtenez :</h2>
+        <ul>
+          <li>Une fiche publique avec <strong>nom, logo, description et lien</strong> vers votre site.</li>
+          <li>Un référencement dans une <strong>catégorie IA adaptée</strong> (assistant, chatbot, marketing, etc.).</li>
+          <li>Un lien direct depuis une page <strong>pensée pour le SEO</strong> (Google).</li>
+        </ul>
+      </div>
 
-    <label for="short_description">Description courte</label>
-    <textarea id="short_description" name="short_description" rows="3"></textarea>
+      <div class="highlight-box">
+        <p>
+          Le paiement est géré par <strong>Stripe</strong>. Une fois validé, votre outil
+          est automatiquement publié dans l’annuaire.
+        </p>
+      </div>
+    </div>
 
-    <label for="long_description">Description détaillée</label>
-    <textarea id="long_description" name="long_description" rows="6"></textarea>
+    <!-- Colonne droite : carte formulaire -->
+    <div class="add-tool-card">
+      <h2>Formulaire de référencement</h2>
+      <p class="card-subtitle">
+        Remplissez les informations ci-dessous. Les champs marqués d’une étoile sont obligatoires.
+      </p>
 
-    <label for="logo_url">Logo (URL de l’image, optionnel)</label>
-    <input id="logo_url" type="text" name="logo_url" placeholder="https://...">
+      <form method="post" class="form-tool-grid">
+        <div class="field-group">
+          <label for="name">Nom de l’outil *</label>
+          <input id="name" type="text" name="name" required placeholder="Ex : FlowBrain AI">
+        </div>
 
-    <label for="category">Catégorie (ex : Assistant IA, Chatbot, Marketing…)</label>
-    <input id="category" type="text" name="category">
+        <div class="field-group">
+          <label for="url">URL du site officiel *</label>
+          <input id="url" type="url" name="url" required placeholder="https://votre-site.com">
+        </div>
 
-    <label for="tags">Tags (séparés par des virgules)</label>
-    <input id="tags" type="text" name="tags" placeholder="#assistant #automation">
+        <div class="field-group full-width">
+          <label for="short_description">Description courte</label>
+          <textarea
+            id="short_description"
+            name="short_description"
+            rows="3"
+            placeholder="En une ou deux phrases, expliquez ce que fait votre outil et pour qui il est conçu."
+          ></textarea>
+        </div>
 
-    <button type="submit" class="btn btn-primary">
-      Procéder au paiement (20€)
-    </button>
-  </form>
+        <div class="field-group full-width">
+          <label for="long_description">Description détaillée</label>
+          <textarea
+            id="long_description"
+            name="long_description"
+            rows="5"
+            placeholder="Fonctionnalités principales, cas d’usage, type de clients, intégrations, etc."
+          ></textarea>
+        </div>
+
+        <div class="field-group">
+          <label for="logo_url">Logo (URL de l’image, optionnel)</label>
+          <input
+            id="logo_url"
+            type="text"
+            name="logo_url"
+            placeholder="https://… (format carré ou presque carré conseillé)"
+          >
+        </div>
+
+        <div class="field-group">
+          <label for="category">Catégorie</label>
+          <input
+            id="category"
+            type="text"
+            name="category"
+            placeholder="Ex : Assistant IA, Chatbot, Marketing, Analytics…"
+          >
+        </div>
+
+        <div class="field-group full-width">
+          <label for="tags">Tags (séparés par des virgules)</label>
+          <input
+            id="tags"
+            type="text"
+            name="tags"
+            placeholder="#assistant #automation #pmE"
+          >
+        </div>
+
+        <div class="form-footer">
+          <p class="form-note">
+            En cliquant sur « Procéder au paiement », vous serez redirigé vers une page Stripe sécurisée.
+          </p>
+          <button type="submit" class="btn btn-primary btn-pay">
+            Procéder au paiement (20€)
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
 </section>
 {% endblock %}
