@@ -1,65 +1,73 @@
 {% extends "base.html" %}
-{% block title %}Annuaire des créateurs d’IA{% endblock %}
+
+{% block title %}Spectra AI Directory — Annuaire d’outils IA pour les entreprises{% endblock %}
+{% block meta_description %}Spectra AI Directory est un annuaire sélectif d’outils IA pour les entreprises. Ajoutez votre outil IA pour 20 € et bénéficiez d’une fiche dédiée, optimisée pour Google, avec lien vers votre site.{% endblock %}
+
 {% block content %}
 <section class="hero">
   <div class="hero-text">
-    <h1>Ton outil IA mérite mieux qu’un tweet perdu.</h1>
-    <p class="hero-subtitle">
-      Annuaire spécialisé pour <strong>agents, assistants IA et outils d’automatisation</strong>.
-      Une page dédiée, un lien SEO propre, une vitrine claire pour les entreprises.
+    <h1>Annuaire d’outils IA pour les entreprises</h1>
+    <p>
+      Spectra AI Directory référence des outils d’intelligence artificielle
+      utiles, concrets et orientés business. Chaque outil dispose d’une fiche
+      détaillée, indexable par Google, avec lien direct vers votre site.
     </p>
-    <div class="hero-actions">
-      <a href="{{ url_for('ajouter') }}" class="btn btn-primary">+ Ajouter mon outil (20€)</a>
-      <a href="{{ url_for('annuaire') }}" class="btn btn-ghost">Voir les outils listés</a>
-    </div>
-    {% if not g.stripe_enabled %}
-      <p class="demo-note">
-        <strong>Mode démo actif :</strong> pour l’instant, l’ajout est sans paiement.
-        Ajoute simplement tes clés Stripe dans <code>.env</code> pour activer le mode payant.
-      </p>
-    {% endif %}
+    <ul class="hero-bullets">
+      <li>💼 Pensé pour les PME, indépendants et créateurs de produits IA</li>
+      <li>🔗 Une fiche individuelle, optimisée SEO avec lien vers votre site</li>
+      <li>💶 Publication unique : 20&nbsp;€ par outil, sans abonnement</li>
+    </ul>
+    <a href="{{ url_for('ajouter_tool') }}" class="btn-primary hero-btn">Ajouter mon outil IA (20&nbsp;€)</a>
   </div>
   <div class="hero-side">
-    <div class="stat-card">
-      <span class="stat-label">Listing unique</span>
-      <span class="stat-value">20€</span>
-      <span class="stat-caption">A vie, pas d’abonnement.</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-label">Pensé pour</span>
-      <span class="stat-value">Créateurs d’IA</span>
-      <span class="stat-caption">Agents, bots, API & SaaS.</span>
+    <div class="hero-card">
+      <h2>Comment ça marche ?</h2>
+      <ol>
+        <li>Vous remplissez le formulaire «&nbsp;Ajouter un outil IA&nbsp;»</li>
+        <li>Vous réglez 20&nbsp;€ via Stripe</li>
+        <li>Votre fiche est publiée automatiquement dans l’annuaire</li>
+      </ol>
+      <p class="hero-note">
+        Plus l’annuaire grandit, plus chaque fiche gagne en visibilité.
+      </p>
     </div>
   </div>
 </section>
 
 <section class="section">
-  <h2>Derniers outils ajoutés</h2>
+  <div class="section-header">
+    <h2>Derniers outils ajoutés</h2>
+    <a href="{{ url_for('annuaire_list') }}" class="link-small">Voir tout l’annuaire →</a>
+  </div>
+
   {% if tools %}
-    <div class="card-grid">
+    <div class="cards-grid">
       {% for tool in tools %}
         <article class="tool-card">
-          <header>
-            {% if tool.logo_url %}
-              <img src="{{ tool.logo_url }}" alt="Logo {{ tool.name }}" class="tool-logo">
-            {% endif %}
-            <h3><a href="{{ url_for('tool_detail', tool_id=tool.id) }}">{{ tool.name }}</a></h3>
-            {% if tool.tagline %}
-              <p class="tool-tagline">{{ tool.tagline }}</p>
-            {% endif %}
-          </header>
-          {% if tool.category or tool.country %}
-          <p class="tool-meta">
-            {% if tool.category %}<span class="pill">{{ tool.category }}</span>{% endif %}
-            {% if tool.country %}<span class="pill pill-soft">{{ tool.country }}</span>{% endif %}
-          </p>
+          {% if tool['logo_url'] %}
+            <div class="tool-logo">
+              <img src="{{ tool['logo_url'] }}" alt="Logo {{ tool['name'] }}">
+            </div>
           {% endif %}
-          <a href="{{ tool.website_url }}" target="_blank" class="tool-link">Visiter le site →</a>
+          <h3>
+            <a href="{{ url_for('tool_detail', tool_id=tool['id']) }}">
+              {{ tool['name'] }}
+            </a>
+          </h3>
+          {% if tool['short_description'] %}
+            <p class="tool-short">{{ tool['short_description'] }}</p>
+          {% endif %}
+          <p class="tool-meta">
+            <span class="tool-category">{{ tool['category'] or "Outil IA" }}</span>
+            {% if tool['tags'] %}
+              · <span class="tool-tags">{{ tool['tags'] }}</span>
+            {% endif %}
+          </p>
         </article>
       {% endfor %}
     </div>
   {% else %}
-    <p>Personne n’est encore listé. Sois le premier à réserver ta place.</p>
+    <p>Aucun outil publié pour le moment. Votre outil peut être le premier.</p>
   {% endif %}
 </section>
 {% endblock %}
