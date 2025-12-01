@@ -1,73 +1,102 @@
 {% extends "base.html" %}
 
-{% block title %}Spectra AI Directory — Annuaire d’outils IA pour les entreprises{% endblock %}
-{% block meta_description %}Spectra AI Directory est un annuaire sélectif d’outils IA pour les entreprises. Ajoutez votre outil IA pour 20 € et bénéficiez d’une fiche dédiée, optimisée pour Google, avec lien vers votre site.{% endblock %}
+{% block title %}Spectra AI Directory — Annuaire d’outils IA pour entreprises{% endblock %}
 
 {% block content %}
-<section class="hero">
-  <div class="hero-text">
-    <h1>Annuaire d’outils IA pour les entreprises</h1>
-    <p>
-      Spectra AI Directory référence des outils d’intelligence artificielle
-      utiles, concrets et orientés business. Chaque outil dispose d’une fiche
-      détaillée, indexable par Google, avec lien direct vers votre site.
+<section style="display:grid;grid-template-columns:minmax(0,1.8fr) minmax(0,1.2fr);gap:2.25rem;align-items:flex-start;margin-bottom:2.5rem;">
+  <div>
+    <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.25rem .65rem;border-radius:999px;border:1px solid rgba(55,65,81,0.85);background:rgba(15,23,42,0.9);margin-bottom:.9rem;font-size:.75rem;color:#9ca3af;">
+      <span style="width:9px;height:9px;border-radius:999px;background:radial-gradient(circle at 30% 20%,#22c55e 0,#16a34a 45%,#052e16 100%);box-shadow:0 0 0 3px rgba(22,163,74,0.55);"></span>
+      <span>Pensé pour les vraies entreprises. Pas de hype “just launched”.</span>
+    </div>
+
+    <h1 style="font-size:2.45rem;line-height:1.05;margin-bottom:.9rem;">
+      L’annuaire d’outils IA
+      <br />
+      <span style="background:linear-gradient(135deg,#38bdf8,#a855f7,#f97316);-webkit-background-clip:text;color:transparent;">
+        qui parle business, pas bullshit
+      </span>
+    </h1>
+
+    <p style="color:#9ca3af;font-size:.96rem;line-height:1.7;margin-bottom:1rem;max-width:35rem;">
+      Spectra AI Directory est une **sélection organisée d’outils d’intelligence artificielle conçus pour les entreprises et les professionnels**.
+      Nous mettons en avant des produits qui permettent aux équipes de <strong>vendre plus, répondre plus vite,
+      automatiser les tâches répétitives et prendre de meilleures décisions</strong> — sans avoir besoin d’un ingénieur IA en interne.
     </p>
-    <ul class="hero-bullets">
-      <li>💼 Pensé pour les PME, indépendants et créateurs de produits IA</li>
-      <li>🔗 Une fiche individuelle, optimisée SEO avec lien vers votre site</li>
-      <li>💶 Publication unique : 20&nbsp;€ par outil, sans abonnement</li>
+
+    <ul style="color:#9ca3af;font-size:.86rem;line-height:1.6;margin-bottom:1.4rem;max-width:34rem;padding-left:1.1rem;">
+      <li>✔ Focalisé sur les <strong>cas d’usage B2B & entreprise</strong> (ventes, support, opérations, data, contenu)</li>
+      <li>✔ Outils sélectionnés parce qu’ils tournent déjà dans de vraies équipes, pas des side-projects</li>
+      <li>✔ Explications claires et non techniques pour que les décideurs comprennent vraiment la valeur</li>
     </ul>
-    <a href="{{ url_for('ajouter_tool') }}" class="btn-primary hero-btn">Ajouter mon outil IA (20&nbsp;€)</a>
+
+    <div style="display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:1.75rem;">
+      <a href="{{ url_for('annuaire_list') }}"
+         style="padding:.68rem 1.3rem;border-radius:999px;background:linear-gradient(135deg,#3b82f6,#2563eb);color:white;font-size:.9rem;font-weight:560;box-shadow:0 16px 34px rgba(37,99,235,0.72);">
+        Parcourir les outils IA pour entreprises
+      </a>
+
+      <!-- GROS BOUTON ROUGE POUR LES CRÉATEURS -->
+      <a href="{{ url_for('ajouter') }}"
+         style="padding:.7rem 1.5rem;border-radius:999px;
+                background:linear-gradient(135deg,#ef4444,#b91c1c);
+                color:white;font-size:.9rem;font-weight:650;
+                box-shadow:0 18px 40px rgba(185,28,28,0.9);">
+        Vous avez créé un outil IA ? Ajoutez-le ici pour 20€ →
+      </a>
+    </div>
+
+    <p style="font-size:.78rem;color:#6b7280;max-width:32rem;">
+      Idéal pour les fondateurs, créateurs de SaaS et agences qui veulent placer leur produit IA
+      devant des **décideurs, consultants et dirigeant·es de PME** qui cherchent activement des outils qui fonctionnent.
+    </p>
   </div>
-  <div class="hero-side">
-    <div class="hero-card">
-      <h2>Comment ça marche ?</h2>
-      <ol>
-        <li>Vous remplissez le formulaire «&nbsp;Ajouter un outil IA&nbsp;»</li>
-        <li>Vous réglez 20&nbsp;€ via Stripe</li>
-        <li>Votre fiche est publiée automatiquement dans l’annuaire</li>
-      </ol>
-      <p class="hero-note">
-        Plus l’annuaire grandit, plus chaque fiche gagne en visibilité.
-      </p>
+
+  <div style="background:radial-gradient(circle at top,#1f2937 0,#020617 70%);border-radius:1.5rem;border:1px solid rgba(55,65,81,0.95);padding:1.25rem 1.35rem 1.3rem;box-shadow:0 22px 45px rgba(15,23,42,0.85);position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:auto -40px 20px auto;width:180px;height:180px;background:radial-gradient(circle,#a855f7 0,#020617 65%);opacity:0.22;filter:blur(14px);"></div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;">
+      <div style="font-size:.8rem;color:#9ca3af;">Aujourd’hui sur Spectra AI Directory</div>
+      <span style="font-size:.7rem;color:#6b7280;">Liste alphabétique • {{ tools|length }} outils</span>
+    </div>
+
+    <div style="display:grid;gap:.65rem;max-height:280px;overflow:auto;padding-right:.4rem;">
+      {% for tool in tools[:6] %}
+        <article style="border-radius:1rem;border:1px solid rgba(55,65,81,0.95);background:rgba(15,23,42,0.98);padding:.7rem .85rem;display:flex;flex-direction:column;gap:.25rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;">
+            <a href="{{ url_for('tool_detail', slug=tool['slug']) }}" style="font-size:.9rem;font-weight:550;">{{ tool["name"] }}</a>
+            <span style="font-size:.7rem;border-radius:999px;padding:.15rem .55rem;background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.55);color:#bfdbfe;">
+              {{ tool["category"] or "Général" }}
+            </span>
+          </div>
+          <p style="font-size:.78rem;color:#9ca3af;line-height:1.6;">{{ tool["short_description"] }}</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.15rem;">
+            <a href="{{ tool['website_url'] }}" target="_blank" rel="noopener" style="font-size:.76rem;color:#60a5fa;">Voir le site ↗</a>
+            {% if tool["pricing"] %}
+              <span style="font-size:.75rem;color:#e5e7eb;">{{ tool["pricing"] }}</span>
+            {% endif %}
+          </div>
+        </article>
+      {% else %}
+        <p style="font-size:.82rem;color:#9ca3af;">Aucun outil pour l’instant — le vôtre peut être le premier ✨</p>
+      {% endfor %}
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="section-header">
-    <h2>Derniers outils ajoutés</h2>
-    <a href="{{ url_for('annuaire_list') }}" class="link-small">Voir tout l’annuaire →</a>
-  </div>
+<section>
+  <h2 style="font-size:1.15rem;margin-bottom:.75rem;">Parcourir par catégorie</h2>
+  <p style="font-size:.86rem;color:#9ca3af;margin-bottom:1.1rem;">
+    Six grandes catégories orientées business pour trouver rapidement les outils IA adaptés à vos besoins.
+  </p>
+  {% include "partials_category_filters.html" %}
+</section>
 
-  {% if tools %}
-    <div class="cards-grid">
-      {% for tool in tools %}
-        <article class="tool-card">
-          {% if tool['logo_url'] %}
-            <div class="tool-logo">
-              <img src="{{ tool['logo_url'] }}" alt="Logo {{ tool['name'] }}">
-            </div>
-          {% endif %}
-          <h3>
-            <a href="{{ url_for('tool_detail', tool_id=tool['id']) }}">
-              {{ tool['name'] }}
-            </a>
-          </h3>
-          {% if tool['short_description'] %}
-            <p class="tool-short">{{ tool['short_description'] }}</p>
-          {% endif %}
-          <p class="tool-meta">
-            <span class="tool-category">{{ tool['category'] or "Outil IA" }}</span>
-            {% if tool['tags'] %}
-              · <span class="tool-tags">{{ tool['tags'] }}</span>
-            {% endif %}
-          </p>
-        </article>
-      {% endfor %}
-    </div>
-  {% else %}
-    <p>Aucun outil publié pour le moment. Votre outil peut être le premier.</p>
-  {% endif %}
+<section style="margin-top:1.9rem;">
+  <h2 style="font-size:1.05rem;margin-bottom:.55rem;">Tous les outils (ordre alphabétique)</h2>
+  <p style="font-size:.8rem;color:#6b7280;margin-bottom:1rem;">
+    Triés de A → Z. Utilisez les filtres ci-dessus pour vous concentrer sur une catégorie.
+  </p>
+  {% include "partials_tools_list.html" %}
 </section>
 {% endblock %}
