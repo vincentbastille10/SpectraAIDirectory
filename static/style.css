@@ -43,21 +43,31 @@ a:hover {
   padding: 0.85rem 0;
 }
 
-.logo {
+/* Logo version "Spectra AI Directory" */
+
+.logo-title {
   display: flex;
   flex-direction: column;
 }
 
-.logo-main {
+.site-name {
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   font-size: 0.9rem;
 }
 
-.logo-sub {
+.site-tagline {
   font-size: 0.75rem;
   opacity: 0.7;
+}
+
+/* Nav + drapeau */
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .main-nav {
@@ -77,7 +87,9 @@ a:hover {
   border-color: rgba(255, 255, 255, 0.25);
 }
 
-.btn-primary {
+/* Bouton "Ajouter mon outil (20€)" */
+
+.btn-nav {
   background: linear-gradient(135deg, #ff3366, #ff7a3c);
   border-radius: 999px;
   border: none;
@@ -91,9 +103,24 @@ a:hover {
   justify-content: center;
 }
 
-.btn-primary:hover {
+.btn-nav:hover {
   filter: brightness(1.08);
   text-decoration: none;
+}
+
+/* Lien vers version anglaise */
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+}
+
+.flag-icon {
+  width: 22px;
+  height: auto;
+  border-radius: 2px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }
 
 /* MAIN LAYOUT */
@@ -333,6 +360,17 @@ a:hover {
     align-items: flex-start;
   }
 
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .main-nav {
     gap: 0.4rem;
   }
@@ -341,6 +379,7 @@ a:hover {
     font-size: 0.8rem;
   }
 }
+
 /* === Page Ajouter un outil IA === */
 
 .add-tool-section {
