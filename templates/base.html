@@ -2,23 +2,23 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <title>{% block title %}Spectra AI Directory — Annuaire d’outils IA pour entreprises & équipes{% endblock %}</title>
+  <title>{% block title %}Spectra AI Directory — Annuaire d’outils IA pour entreprises{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description"
-        content="Spectra AI Directory est un annuaire sélectionné d’outils IA conçus pour les entreprises et les professionnels, avec un focus sur la vente, la productivité, le support client, l’analytics, le contenu et les outils développeurs." />
+        content="Spectra AI Directory est un annuaire sélectionné d’outils IA conçus pour les entreprises et les professionnels, avec un focus sur les ventes, la productivité, le support client, l’analytics, le contenu et les outils pour développeurs." />
 
   <!-- Favicon -->
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
   <!-- Open Graph / social -->
-  <meta property="og:title" content="Spectra AI Directory — Annuaire d’outils IA pour entreprises & équipes" />
+  <meta property="og:title" content="Spectra AI Directory — Annuaire d’outils IA pour entreprises" />
   <meta property="og:description"
-        content="Découvrez des outils IA qui aident vraiment les entreprises à vendre plus, répondre plus vite aux clients et automatiser leurs opérations. Ajoutez votre outil IA pour 20€." />
+        content="Découvrez des outils IA qui aident vraiment les entreprises à vendre plus, répondre plus vite aux clients et automatiser le travail. Ajoutez votre outil IA pour 20€." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://spectraaidirectory.onrender.com/" />
   <meta property="og:image" content="{{ url_for('static', filename='og-image.png') }}" />
 
-  <!-- Basic reset + fonts + layout -->
+  <!-- Basic reset + fonts + layout (identique à la version anglaise) -->
   <style>
     :root {
       --bg: #050816;
@@ -215,6 +215,12 @@
       background: rgba(15,23,42,0.95);
       border: 1px solid rgba(55,65,81,0.85);
       color: var(--muted);
+      transition:
+        transform 0.18s ease-out,
+        box-shadow 0.18s ease-out,
+        border-color 0.18s ease-out,
+        background 0.18s ease-out;
+      box-shadow: 0 10px 25px rgba(15,23,42,0.7);
     }
 
     .badge-dot {
@@ -223,6 +229,13 @@
       border-radius: 999px;
       background: radial-gradient(circle at 30% 20%, #22c55e 0, #16a34a 40%, #052e16 100%);
       box-shadow: 0 0 0 2px rgba(22,163,74,0.55);
+    }
+
+    .badge:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.95);
+      border-color: rgba(59,130,246,0.7);
+      background: radial-gradient(circle at top left, rgba(59,130,246,0.22), rgba(15,23,42,0.98));
     }
 
     .flash-container {
@@ -339,7 +352,7 @@
       <div>
         <span class="badge">
           <span class="badge-dot"></span>
-          Sélection par <strong>Spectra Media AI</strong>
+          Sélectionné par <strong>Spectra Media AI</strong>
         </span>
       </div>
 
@@ -347,7 +360,7 @@
         Ajoutez votre outil IA pour <strong>20€</strong> et touchez des entreprises qui cherchent des solutions qui fonctionnent vraiment.
       </div>
 
-      <!-- Product Hunt embed with animated hover -->
+      <!-- Product Hunt embed avec hover animé -->
       <div class="ph-badge-wrapper">
         <a href="https://www.producthunt.com/products/ai-tools-directory-by-spectra-media?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-ai&#0045;tools&#0045;directory&#0045;by&#0045;spectra&#0045;media"
            class="ph-badge"
@@ -362,7 +375,6 @@
         </a>
       </div>
 
-      <!-- Contact -->
       <div style="margin-top: 0.4rem;">
         Questions ? Contact : <strong>spectramediabots@gmail.com</strong>
       </div>
