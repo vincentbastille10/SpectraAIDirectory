@@ -13,7 +13,7 @@
   <!-- Canonical -->
   <link rel="canonical" href="{{ request.url }}" />
 
-  <!-- Open Graph basique (pas de blocs imbriqués) -->
+  <!-- Open Graph basique -->
   <meta property="og:title" content="{{ self.title()|striptags }}">
   <meta property="og:description" content="{{ self.meta_description()|striptags }}">
   <meta property="og:type" content="website">
@@ -39,11 +39,11 @@
         <nav class="main-nav">
           <a href="{{ url_for('index') }}">Accueil</a>
           <a href="{{ url_for('annuaire_list') }}">Voir l’annuaire</a>
-          <a href="{{ url_for('ajouter') }}" class="btn-nav">Ajouter mon outil (20€)</a>
+          <a href="{{ url_for('ajouter_tool') }}" class="btn-nav">Ajouter mon outil (20€)</a>
         </nav>
 
         <!-- Switch vers la version anglaise -->
-        <a href="https://spectraaidirectory-en.onrender.com"
+        <a href="https://spectra-media-directory-english-version.onrender.com/"
            class="lang-switch"
            title="Switch to English">
           <img src="{{ url_for('static', filename='img/flag-uk.png') }}"
@@ -65,7 +65,9 @@
       <p>© {{ 2025 }} Spectra Media AI — Spectra AI Directory.</p>
       <p class="footer-note">
         Référencement d’outils d’intelligence artificielle pour entreprises. Mise en avant de
-        <a href="https://www.spectramedia.online/" target="_blank" rel="noopener">Betty Bots — Assistante IA métier</a>.
+        <a href="https://www.spectramedia.online/" target="_blank" rel="noopener">
+          Betty Bots — Assistante IA métier
+        </a>.
       </p>
     </div>
   </footer>
