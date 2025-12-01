@@ -2,175 +2,373 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
+  <title>{% block title %}Spectra AI Directory — Annuaire d’outils IA pour entreprises & équipes{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>
-    {% block title %}Spectra AI Directory — Annuaire d’outils IA pour entreprises{% endblock %}
-  </title>
-
-  <meta name="description" content="{% block meta_description %}Annuaire d’outils d’intelligence artificielle pour TPE, PME et indépendants : assistants IA métier, chatbots, automatisation commerciale, support client, marketing et analytics.{% endblock %}">
-
-  <!-- Canonical -->
-  <link rel="canonical" href="{{ request.url }}" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="{{ self.title()|striptags }}">
-  <meta property="og:description" content="{{ self.meta_description()|striptags }}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ request.url }}">
+  <meta name="description"
+        content="Spectra AI Directory est un annuaire sélectionné d’outils IA conçus pour les entreprises et les professionnels, avec un focus sur la vente, la productivité, le support client, l’analytics, le contenu et les outils développeurs." />
 
   <!-- Favicon -->
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
-  {% block extra_head %}{% endblock %}
+  <!-- Open Graph / social -->
+  <meta property="og:title" content="Spectra AI Directory — Annuaire d’outils IA pour entreprises & équipes" />
+  <meta property="og:description"
+        content="Découvrez des outils IA qui aident vraiment les entreprises à vendre plus, répondre plus vite aux clients et automatiser leurs opérations. Ajoutez votre outil IA pour 20€." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://spectraaidirectory.onrender.com/" />
+  <meta property="og:image" content="{{ url_for('static', filename='og-image.png') }}" />
 
-  <!-- Ton CSS principal -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-  <!-- Mini CSS pour le badge premium + footer -->
+  <!-- Basic reset + fonts + layout -->
   <style>
-    .footer-inner {
+    :root {
+      --bg: #050816;
+      --bg-alt: #0b1020;
+      --card: #111827;
+      --accent: #3b82f6;
+      --accent-soft: rgba(59,130,246,0.15);
+      --accent-strong: #2563eb;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border-subtle: #1f2937;
+      --danger: #ef4444;
+      --success: #4ade80;
+      --radius-xl: 1.25rem;
+      --shadow-soft: 0 22px 45px rgba(15,23,42,0.65);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 50%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      text-align: center;
     }
 
-    .footer-note {
-      opacity: 0.85;
-      font-size: 0.85rem;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    .footer-contact {
-      font-size: 0.85rem;
-      opacity: 0.9;
+    .page-shell {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+      width: 100%;
     }
 
-    .footer-contact a {
-      text-decoration: underline;
+    header.site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
     }
 
-    .footer-ph {
-      margin-top: 0.5rem;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
     }
 
-    /* Badge "Sélectionné par Spectra Media AI" */
-    .footer-badge-row {
-      margin-bottom: 0.25rem;
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: conic-gradient(
+        from 180deg,
+        #22d3ee,
+        #a855f7,
+        #f97316,
+        #22c55e,
+        #22d3ee
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 2px rgba(15,23,42,0.9), 0 16px 35px rgba(15,23,42,0.85);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-logo::after {
+      content: "";
+      width: 70%;
+      height: 70%;
+      border-radius: inherit;
+      background: radial-gradient(circle at 30% 20%, #0f172a 0, #020617 65%);
+      opacity: .9;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .brand-title {
+      font-weight: 650;
+      letter-spacing: .03em;
+      font-size: 1rem;
+    }
+
+    .brand-subtitle {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    nav.site-nav {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      font-size: .83rem;
+    }
+
+    .nav-link {
+      padding: .45rem .75rem;
+      border-radius: 999px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      transition: all .16s ease-out;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      border-color: rgba(148,163,184,0.35);
+      background: rgba(15,23,42,0.75);
+    }
+
+    .nav-link.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 12px 30px rgba(37,99,235,0.55);
+      font-weight: 560;
+    }
+
+    .nav-link.primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(37,99,235,0.75);
+    }
+
+    .lang-switch {
+      margin-left: .4rem;
+      font-size: .9rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+    }
+
+    .lang-switch a {
+      padding: .18rem .45rem;
+      border-radius: .6rem;
+      border: 1px solid transparent;
+      transition: background .16s ease-out, border-color .16s ease-out, transform .16s ease-out;
+    }
+
+    .lang-switch a:hover {
+      border-color: rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.9);
+      transform: translateY(-1px);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    footer {
+      border-top: 1px solid rgba(15,23,42,0.95);
+      background: radial-gradient(circle at top, #020617 0, #000 60%);
+      padding: 1.75rem 1.25rem;
+      color: var(--muted);
+      font-size: .8rem;
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+
+    .footer-inner strong {
+      color: var(--text);
+      font-weight: 500;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: .4rem;
       border-radius: 999px;
-      padding: 0.2rem 0.75rem 0.2rem 0.3rem;
-      font-size: 0.78rem;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      color: #a0a3b0;
-      cursor: default;
-      transition:
-        transform 0.18s ease-out,
-        box-shadow 0.18s ease-out,
-        border-color 0.18s ease-out,
-        background 0.18s ease-out;
+      padding: .18rem .6rem .18rem .18rem;
+      font-size: .72rem;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(55,65,81,0.85);
+      color: var(--muted);
     }
 
     .badge-dot {
       width: 18px;
       height: 18px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #22c55e 0, #16a34a 45%, #052e16 100%);
-      box-shadow:
-        0 0 0 2px rgba(22, 163, 74, 0.55),
-        0 0 18px rgba(22, 163, 74, 0.65);
-      flex-shrink: 0;
+      background: radial-gradient(circle at 30% 20%, #22c55e 0, #16a34a 40%, #052e16 100%);
+      box-shadow: 0 0 0 2px rgba(22,163,74,0.55);
     }
 
-    .badge:hover {
-      transform: translateY(-1px) scale(1.03);
-      border-color: rgba(96, 165, 250, 0.9);
-      box-shadow:
-        0 0 0 1px rgba(56, 189, 248, 0.4),
-        0 15px 35px rgba(15, 23, 42, 0.85);
-      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.22), rgba(15, 23, 42, 1));
+    .flash-container {
+      margin-bottom: 1rem;
+    }
+
+    .flash-message {
+      padding: .6rem .85rem;
+      border-radius: .75rem;
+      font-size: .83rem;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15,23,42,0.95);
+      color: var(--text);
+      margin-bottom: .35rem;
+    }
+
+    .flash-message.error {
+      border-color: rgba(248,113,113,0.7);
+      background: linear-gradient(135deg, rgba(127,29,29,0.96), rgba(15,23,42,0.98));
+      color: #fee2e2;
+    }
+
+    .flash-message.success {
+      border-color: rgba(34,197,94,0.8);
+      background: linear-gradient(135deg, rgba(6,95,70,0.96), rgba(15,23,42,0.98));
+      color: #dcfce7;
+    }
+
+    /* Product Hunt badge – premium hover */
+    .ph-badge-wrapper {
+      margin-top: 0.4rem;
+    }
+
+    .ph-badge {
+      display: inline-flex;
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.7);
+      transition:
+        transform 0.18s ease-out,
+        box-shadow 0.18s ease-out,
+        filter 0.18s ease-out;
+      background: #f9fafb;
+    }
+
+    .ph-badge img {
+      display: block;
+      width: 250px;
+      height: 54px;
+    }
+
+    .ph-badge:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 20px 45px rgba(15,23,42,0.9);
+      filter: brightness(1.04);
+    }
+
+    @media (max-width: 640px) {
+      header.site-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav.site-nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
     }
   </style>
+
+  {% block head_extra %}{% endblock %}
 </head>
-
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="brand">
+        <div class="brand-logo"></div>
+        <div class="brand-text">
+          <div class="brand-title">Spectra AI Directory</div>
+          <div class="brand-subtitle">Des outils IA qui vous aident vraiment à travailler</div>
+        </div>
+      </div>
+      <nav class="site-nav">
+        <a href="{{ url_for('index') }}" class="nav-link">Aperçu</a>
+        <a href="{{ url_for('annuaire_list') }}" class="nav-link">Tous les outils</a>
+        <a href="{{ url_for('ajouter') }}" class="nav-link primary">Ajouter mon outil IA</a>
 
-      <div class="logo-title">
-        <a href="{{ url_for('index') }}" class="site-name">Spectra AI Directory</a>
-        <span class="site-tagline">Annuaire d’outils IA pour entreprises</span>
+        <!-- Switch FR / EN -->
+        <div class="lang-switch">
+          <a href="https://spectraaidirectory.onrender.com" title="Version française">🇫🇷</a>
+          <span>·</span>
+          <a href="https://spectra-media-directory-english-version.onrender.com" title="English version">🇬🇧</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="flash-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
       </div>
 
-      <div class="header-right">
-        <nav class="main-nav">
-          <a href="{{ url_for('index') }}">Accueil</a>
-          <a href="{{ url_for('annuaire_list') }}">Voir l’annuaire</a>
-          <a href="{{ url_for('ajouter') }}" class="btn-nav">Ajouter mon outil (20€)</a>
-        </nav>
-
-        <!-- Switch FR → EN -->
-        <a href="https://spectra-media-directory-english-version.onrender.com"
-           class="lang-switch"
-           title="Switch to English">
-          <img src="{{ url_for('static', filename='img/flag-uk.png') }}"
-               alt="English"
-               class="flag-icon">
-        </a>
-      </div>
-
-    </div>
-  </header>
-
-  <main class="site-main">
-    <div class="container">
       {% block content %}{% endblock %}
-    </div>
-  </main>
+    </main>
+  </div>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-
-      <!-- Badge premium -->
-      <div class="footer-badge-row">
+  <footer>
+    <div class="footer-inner">
+      <div>
         <span class="badge">
           <span class="badge-dot"></span>
-          Sélectionné par <strong>Spectra Media AI</strong>
+          Sélection par <strong>Spectra Media AI</strong>
         </span>
       </div>
 
-      <p>© {{ 2025 }} Spectra Media AI — Spectra AI Directory.</p>
+      <div>
+        Ajoutez votre outil IA pour <strong>20€</strong> et touchez des entreprises qui cherchent des solutions qui fonctionnent vraiment.
+      </div>
 
-      <p class="footer-note">
-        Référencement d’outils d’intelligence artificielle pour entreprises. Mise en avant de
-        <a href="https://www.spectramedia.online/" target="_blank" rel="noopener">
-          Betty Bots — Assistante IA métier
-        </a>.
-      </p>
-
-      <p class="footer-contact">
-        Questions ? Contact : 
-        <a href="mailto:spectramediabots@gmail.com">spectramediabots@gmail.com</a>
-      </p>
-
-      <!-- Product Hunt badge -->
-      <div class="footer-ph">
+      <!-- Product Hunt embed with animated hover -->
+      <div class="ph-badge-wrapper">
         <a href="https://www.producthunt.com/products/ai-tools-directory-by-spectra-media?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-ai&#0045;tools&#0045;directory&#0045;by&#0045;spectra&#0045;media"
-           target="_blank" rel="noopener">
-          <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1043962&theme=light&t=1764585675777"
-               alt="AI Tools Directory — by Spectra Media | Product Hunt"
-               width="250" height="54" />
+           class="ph-badge"
+           target="_blank"
+           rel="noopener">
+          <img
+            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1043962&theme=light&t=1764585675777"
+            alt="AI Tools Directory — by Spectra Media | Product Hunt"
+            width="250"
+            height="54"
+          />
         </a>
       </div>
 
+      <!-- Contact -->
+      <div style="margin-top: 0.4rem;">
+        Questions ? Contact : <strong>spectramediabots@gmail.com</strong>
+      </div>
     </div>
   </footer>
+
+  {% block body_extra %}{% endblock %}
 </body>
 </html>
