@@ -55,6 +55,39 @@ def get_db():
         conn.close()
 
 
+def slugify(name: str) -> str:
+    """
+    Transforme un nom d'outil en slug URL-safe très simple.
+    Exemple : "Betty Bots — Assistante IA" -> "betty-bots-assistante-ia"
+    """
+    s = name.lower()
+    s = "".join(ch if ch.isalnum() else "-" for ch in s)
+    while "--" in s:
+        s = s.replace("--", "-")
+    s = s.strip("-")
+    if not s:
+        s = "tool"
+    return s
+
+
+def generate_unique_slug(db: sqlite3.Connection, name: str) -> str:
+    """
+    Génère un slug unique sur la table tools.
+    """
+    base = slugify(name)
+    slug = base
+    suffix = 2
+    while True:
+        row = db.execute(
+            "SELECT 1 FROM tools WHERE slug = ? LIMIT 1",
+            (slug,),
+        ).fetchone()
+        if row is None:
+            return slug
+        slug = f"{base}-{suffix}"
+        suffix += 1
+
+
 def seed_tools(db: sqlite3.Connection) -> None:
     """
     Seed initial d'outils IA :
@@ -459,13 +492,14 @@ def seed_tools(db: sqlite3.Connection) -> None:
     ]
 
     for t in seeds:
+        slug = generate_unique_slug(db, t["name"])
         db.execute(
             """
             INSERT INTO tools (
                 name, url, short_description, long_description,
-                logo_url, category, tags, created_at, is_published
+                logo_url, category, tags, slug, created_at, is_published
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
             """,
             (
                 t["name"],
@@ -475,6 +509,7 @@ def seed_tools(db: sqlite3.Connection) -> None:
                 t["logo"],
                 t["cat"],
                 t["tags"],
+                slug,
                 now,
             ),
         )
@@ -493,12 +528,27 @@ def init_db() -> None:
                 logo_url TEXT,
                 category TEXT,
                 tags TEXT,
+                slug TEXT,
                 created_at TEXT NOT NULL,
                 is_published INTEGER NOT NULL DEFAULT 0
             );
             """
         )
-        row = db.execute("SELECT COUNT(*) AS c FROM tools").fetchone()
+        # Migration légère : s'assurer que la colonne slug existe
+        cols = db.execute("PRAGMA table_info(tools);").fetchall()
+        col_names = [c["name"] for c in cols]
+        if "slug" not in col_names:
+            db.execute("ALTER TABLE tools ADD COLUMN slug TEXT;")
+
+        # Remplir les slugs manquants si nécessaire
+        rows = db.execute(
+            "SELECT id, name FROM tools WHERE slug IS NULL OR slug = '';"
+        ).fetchall()
+        for r in rows:
+            slug = generate_unique_slug(db, r["name"])
+            db.execute("UPDATE tools SET slug = ? WHERE id = ?;", (slug, r["id"]))
+
+        row = db.execute("SELECT COUNT(*) AS c FROM tools;").fetchone()
         if row["c"] == 0:
             seed_tools(db)
 
@@ -512,7 +562,7 @@ def index():
     with get_db() as db:
         tools = db.execute(
             """
-            SELECT id, name, url, short_description, logo_url, category, tags
+            SELECT id, name, url, short_description, logo_url, category, tags, slug
             FROM tools
             WHERE is_published = 1
             ORDER BY
@@ -533,7 +583,7 @@ def annuaire_list():
             pattern = f"%{q}%"
             tools = db.execute(
                 """
-                SELECT id, name, url, short_description, logo_url, category, tags
+                SELECT id, name, url, short_description, logo_url, category, tags, slug
                 FROM tools
                 WHERE is_published = 1
                   AND (
@@ -553,7 +603,7 @@ def annuaire_list():
         else:
             tools = db.execute(
                 """
-                SELECT id, name, url, short_description, logo_url, category, tags
+                SELECT id, name, url, short_description, logo_url, category, tags, slug
                 FROM tools
                 WHERE is_published = 1
                 ORDER BY
@@ -565,16 +615,16 @@ def annuaire_list():
     return render_template("annuaire_list.html", tools=tools, query=q)
 
 
-@app.route("/tool/<int:tool_id>")
-def tool_detail(tool_id: int):
+@app.route("/tool/<slug>")
+def tool_detail(slug: str):
     with get_db() as db:
         tool = db.execute(
             """
             SELECT *
             FROM tools
-            WHERE id = ? AND is_published = 1;
+            WHERE slug = ? AND is_published = 1;
             """,
-            (tool_id,),
+            (slug,),
         ).fetchone()
 
     if not tool:
@@ -605,15 +655,16 @@ def ajouter_tool():
 
     created_at = datetime.utcnow().isoformat()
 
-    # On insère l'outil en brouillon (is_published = 0)
+    # On insère l'outil en brouillon (is_published = 0) avec slug unique
     with get_db() as db:
+        slug = generate_unique_slug(db, name)
         cur = db.execute(
             """
             INSERT INTO tools (
                 name, url, short_description, long_description,
-                logo_url, category, tags, created_at, is_published
+                logo_url, category, tags, slug, created_at, is_published
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
             """,
             (
                 name,
@@ -623,6 +674,7 @@ def ajouter_tool():
                 logo_url,
                 category,
                 tags,
+                slug,
                 created_at,
             ),
         )
@@ -778,7 +830,7 @@ def sitemap_xml():
     with get_db() as db:
         tools = db.execute(
             """
-            SELECT id, created_at, name
+            SELECT slug, created_at, name
             FROM tools
             WHERE is_published = 1
             ORDER BY
@@ -800,7 +852,7 @@ def sitemap_xml():
 
     for t in tools:
         xml.append("  <url>")
-        xml.append(f"    <loc>{base}/tool/{t['id']}</loc>")
+        xml.append(f"    <loc>{base}/tool/{t['slug']}</loc>")
         xml.append(f"    <lastmod>{t['created_at']}</lastmod>")
         xml.append("    <priority>0.8</priority>")
         xml.append("  </url>")
