@@ -25,7 +25,79 @@
 
   {% block extra_head %}{% endblock %}
 
+  <!-- Ton CSS principal -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- Mini CSS pour le badge premium + footer -->
+  <style>
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      text-align: center;
+    }
+
+    .footer-note {
+      opacity: 0.85;
+      font-size: 0.85rem;
+    }
+
+    .footer-contact {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    .footer-contact a {
+      text-decoration: underline;
+    }
+
+    .footer-ph {
+      margin-top: 0.5rem;
+    }
+
+    /* Badge "Sélectionné par Spectra Media AI" */
+    .footer-badge-row {
+      margin-bottom: 0.25rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-radius: 999px;
+      padding: 0.2rem 0.75rem 0.2rem 0.3rem;
+      font-size: 0.78rem;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: #a0a3b0;
+      cursor: default;
+      transition:
+        transform 0.18s ease-out,
+        box-shadow 0.18s ease-out,
+        border-color 0.18s ease-out,
+        background 0.18s ease-out;
+    }
+
+    .badge-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #22c55e 0, #16a34a 45%, #052e16 100%);
+      box-shadow:
+        0 0 0 2px rgba(22, 163, 74, 0.55),
+        0 0 18px rgba(22, 163, 74, 0.65);
+      flex-shrink: 0;
+    }
+
+    .badge:hover {
+      transform: translateY(-1px) scale(1.03);
+      border-color: rgba(96, 165, 250, 0.9);
+      box-shadow:
+        0 0 0 1px rgba(56, 189, 248, 0.4),
+        0 15px 35px rgba(15, 23, 42, 0.85);
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.22), rgba(15, 23, 42, 1));
+    }
+  </style>
 </head>
 
 <body>
@@ -57,16 +129,6 @@
     </div>
   </header>
 
-  <!-- Product Hunt badge -->
-  <div class="container" style="text-align:center; margin:12px 0;">
-    <a href="https://www.producthunt.com/products/ai-tools-directory-by-spectra-media?embed=true&utm_source=badge-featured&utm_medium=badge"
-       target="_blank">
-      <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1043962&theme=light"
-           alt="AI Tools Directory — by Spectra Media | Product Hunt"
-           width="250" height="54">
-    </a>
-  </div>
-
   <main class="site-main">
     <div class="container">
       {% block content %}{% endblock %}
@@ -75,13 +137,39 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
+
+      <!-- Badge premium -->
+      <div class="footer-badge-row">
+        <span class="badge">
+          <span class="badge-dot"></span>
+          Sélectionné par <strong>Spectra Media AI</strong>
+        </span>
+      </div>
+
       <p>© {{ 2025 }} Spectra Media AI — Spectra AI Directory.</p>
+
       <p class="footer-note">
         Référencement d’outils d’intelligence artificielle pour entreprises. Mise en avant de
         <a href="https://www.spectramedia.online/" target="_blank" rel="noopener">
           Betty Bots — Assistante IA métier
         </a>.
       </p>
+
+      <p class="footer-contact">
+        Questions ? Contact : 
+        <a href="mailto:spectramediabots@gmail.com">spectramediabots@gmail.com</a>
+      </p>
+
+      <!-- Product Hunt badge -->
+      <div class="footer-ph">
+        <a href="https://www.producthunt.com/products/ai-tools-directory-by-spectra-media?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-ai&#0045;tools&#0045;directory&#0045;by&#0045;spectra&#0045;media"
+           target="_blank" rel="noopener">
+          <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1043962&theme=light&t=1764585675777"
+               alt="AI Tools Directory — by Spectra Media | Product Hunt"
+               width="250" height="54" />
+        </a>
+      </div>
+
     </div>
   </footer>
 </body>
