@@ -1,0 +1,95 @@
+{# Filtres par catégorie — même structure que la version anglaise #}
+<div style="display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.1rem;">
+  <button
+    type="button"
+    class="category-pill is-active"
+    data-category="all"
+    style="
+      padding:.45rem .9rem;
+      border-radius:999px;
+      border:1px solid rgba(75,85,99,0.9);
+      background:rgba(15,23,42,0.98);
+      font-size:.78rem;
+      color:#e5e7eb;
+      cursor:pointer;
+    "
+  >
+    Tous les outils
+  </button>
+
+  <button type="button" class="category-pill" data-category="Productivité & Automation">
+    Productivité & automation
+  </button>
+
+  <button type="button" class="category-pill" data-category="Sales & Marketing">
+    Ventes & marketing
+  </button>
+
+  <button type="button" class="category-pill" data-category="Customer Support">
+    Support client
+  </button>
+
+  <button type="button" class="category-pill" data-category="Data & Analytics">
+    Données & analytics
+  </button>
+
+  <button type="button" class="category-pill" data-category="Content & Design">
+    Contenu & design
+  </button>
+
+  <button type="button" class="category-pill" data-category="Developer & Ops">
+    Développeurs & ops
+  </button>
+</div>
+
+<script>
+  (function () {
+    const pills = document.querySelectorAll(".category-pill");
+    const cards = document.querySelectorAll("[data-tool-category]");
+
+    if (!pills.length || !cards.length) return;
+
+    pills.forEach(p => {
+      p.addEventListener("click", () => {
+        const selected = p.getAttribute("data-category");
+
+        pills.forEach(x => x.classList.remove("is-active"));
+        p.classList.add("is-active");
+
+        cards.forEach(card => {
+          const cat = card.getAttribute("data-tool-category") || "";
+          if (selected === "all" || cat === selected) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+  })();
+</script>
+
+<style>
+  .category-pill {
+    padding: .45rem .9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(55,65,81,0.8);
+    background: rgba(15,23,42,0.96);
+    font-size: .78rem;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: all .16s ease-out;
+  }
+
+  .category-pill:hover {
+    border-color: rgba(96,165,250,0.8);
+    color: #e5e7eb;
+  }
+
+  .category-pill.is-active {
+    background: linear-gradient(135deg,#3b82f6,#2563eb);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 12px 30px rgba(37,99,235,0.7);
+  }
+</style>
