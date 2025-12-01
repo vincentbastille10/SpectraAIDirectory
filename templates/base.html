@@ -34,11 +34,23 @@
         <a href="{{ url_for('index') }}" class="site-name">Spectra AI Directory</a>
         <span class="site-tagline">Annuaire d’outils IA pour entreprises</span>
       </div>
-      <nav class="main-nav">
-        <a href="{{ url_for('index') }}">Accueil</a>
-        <a href="{{ url_for('annuaire_list') }}">Voir l’annuaire</a>
-        <a href="{{ url_for('ajouter_tool') }}" class="btn-nav">Ajouter mon outil (20€)</a>
-      </nav>
+
+      <div class="header-right">
+        <nav class="main-nav">
+          <a href="{{ url_for('index') }}">Accueil</a>
+          <a href="{{ url_for('annuaire_list') }}">Voir l’annuaire</a>
+          <a href="{{ url_for('ajouter_tool') }}" class="btn-nav">Ajouter mon outil (20€)</a>
+        </nav>
+
+        <!-- Switch vers la version anglaise -->
+        <a href="https://spectraaidirectory-en.onrender.com" 
+           class="lang-switch" 
+           title="Switch to English">
+          <img src="{{ url_for('static', filename='img/flag-uk.png') }}" 
+               alt="English version" 
+               class="flag-icon">
+        </a>
+      </div>
     </div>
   </header>
 
