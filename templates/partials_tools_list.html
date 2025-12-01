@@ -1,0 +1,74 @@
+{# Grille principale des outils — jumeau de la version anglaise #}
+
+{% if tools %}
+  <div
+    class="tools-grid"
+    style="
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:1rem 1.2rem;
+    "
+  >
+    {% for tool in tools %}
+      <article
+        class="tool-card"
+        data-tool-category="{{ tool['category'] or '' }}"
+        style="
+          border-radius:1rem;
+          border:1px solid rgba(55,65,81,0.95);
+          background:rgba(15,23,42,0.98);
+          padding:.8rem .95rem .9rem;
+          display:flex;
+          flex-direction:column;
+          gap:.35rem;
+        "
+      >
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:.4rem;">
+          <a
+            href="{{ url_for('tool_detail', slug=tool['slug']) }}"
+            style="font-size:.9rem;font-weight:560;"
+          >
+            {{ tool["name"] }}
+          </a>
+
+          {% if tool["category"] %}
+            <span
+              style="
+                font-size:.7rem;
+                border-radius:999px;
+                padding:.15rem .55rem;
+                background:rgba(59,130,246,0.12);
+                border:1px solid rgba(59,130,246,0.55);
+                color:#bfdbfe;
+                white-space:nowrap;
+              "
+            >
+              {{ tool["category"] }}
+            </span>
+          {% endif %}
+        </div>
+
+        {% if tool["short_description"] %}
+          <p style="font-size:.78rem;color:#9ca3af;line-height:1.6;">
+            {{ tool["short_description"] }}
+          </p>
+        {% endif %}
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.25rem;">
+          <a
+            href="{{ tool['url'] }}"
+            target="_blank"
+            rel="noopener"
+            style="font-size:.76rem;color:#60a5fa;"
+          >
+            Visiter le site ↗
+          </a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <p style="font-size:.82rem;color:#9ca3af;">
+    Aucun outil référencé pour le moment — le vôtre peut être le premier ✨
+  </p>
+{% endif %}
